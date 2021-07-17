@@ -5,6 +5,11 @@
 namespace YukinoshitaBot
 {
     using System;
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Serilog;
+    using Serilog.Events;
 
     /// <summary>
     /// This is the main class of the application.
@@ -13,7 +18,43 @@ namespace YukinoshitaBot
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // 配置Logger
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
+            try
+            {
+                Log.Information("Starting host");
+                CreateBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
+
+        /// <summary>
+        /// 创建并配置HostBuilder
+        /// </summary>
+        /// <param name="args">控制台参数</param>
+        /// <returns><see cref="IHostBuilder"/>的实例</returns>
+        private static IHostBuilder CreateBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+            .ConfigureLogging(builder =>
+            {
+                builder.AddSerilog();
+            })
+            .ConfigureServices((context, services) =>
+            {
+                services.AddHostedService<MainWorker>();
+            })
+            .UseSerilog();
     }
 }

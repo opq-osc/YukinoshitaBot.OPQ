@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>YukinoshitaBot</name>
+    </assembly>
+    <members>
+        <member name="T:YukinoshitaBot.Program">
+            <summary>
+            This is the main class of the application.
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Worker">
+            <summary>
+            工作线程
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Worker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Worker},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Worker"/> class.
+            </summary>
+            <param name="logger">logger</param>
+            <param name="configuration">config</param>
+        </member>
+        <member name="M:YukinoshitaBot.Worker.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Worker.ExecuteAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+    </members>
+</doc>
