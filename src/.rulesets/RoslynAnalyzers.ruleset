@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="DevRules" Description="Inherits the default dev ruleset from the OSS.RoslynAnalysis package" ToolsVersion="15.0">
+	<Include Path="importedrulesets\RoslynDevBase.ruleset" Action="Default" />
+	<Include Path="RoslynSharedOverrides.ruleset" Action="Default" />
+	<Include Path="importedrulesets\M365RulesOnly.ruleset" Action="Default" />
+	<Rules AnalyzerId="RoslynCQ" RuleNamespace="RoslynCQ">
+		<Rule Id="RoslynCQ_DoNotUseAwaitTaskFromResult" Action="None" />
+
+		<!-- Disable timebomb analyzers. -->
+		<Rule Id="RoslynCQ_DoNotAddForbiddenDaysToDataTime" Action="None" />
+		<Rule Id="RoslynCQ_DoNotJudgeLeapYearWithUnexaminedLogic" Action="None" />
+		<Rule Id="RoslynCQ_DoNotConstructDataTimeFromDifferentResources" Action="None" />
+		<Rule Id="RoslynCQ_DoNotParseExactTimeFromLiteralWithoutYear" Action="None" />
+		<Rule Id="RoslynCQ_DoNotCalculateDirectlyDurationsWithMinus" Action="None" />
+		<Rule Id="RoslynCQ_DaylightSavingTimeConditionalLogicCheck" Action="None" />
+		<Rule Id="RoslynCQ_DoNotCalculateDirectlyDurationsWithMinusSoften" Action="None" />
+	</Rules>
+</RuleSet>

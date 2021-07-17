@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="StyleCopStrict" Description="Strict set of StyleCop rules" ToolsVersion="15.0">
+	<Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+		<!-- These warnings are replicated by StyleCop analyzer functionality.
+    For more info see https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/documentation/SA0001.md -->
+		<Rule Id="CS1573" Action="None" />
+		<Rule Id="CS1591" Action="None" />
+		<Rule Id="CS1712" Action="None" />
+	</Rules>
+	<Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+		<!-- Currently disabled rules in StyleCop.Strict -->
+		<Rule Id="SA1648" Action="None" />
+		<Rule Id="SA1649" Action="None" />
+		<Rule Id="SA1650" Action="None" />
+		<Rule Id="SA1602" Action="None" />
+		<Rule Id="SA1620" Action="None" />
+		<Rule Id="SA1617" Action="None" />
+		<Rule Id="SA1623" Action="None" />
+		<Rule Id="SA1644" Action="None" />
+		<Rule Id="SA1517" Action="None" />
+		<Rule Id="SA1518" Action="None" />
+		<Rule Id="SA1501" Action="None" />
+		<Rule Id="SA1126" Action="None" />
+		<Rule Id="SA1125" Action="None" />
+		<Rule Id="SA1117" Action="None" />
+		<Rule Id="SA1108" Action="None" />
+		<Rule Id="SA1118" Action="None" />
+		<Rule Id="SA1131" Action="None" />
+		<Rule Id="SA1311" Action="None" />
+		<Rule Id="SA1305" Action="None" />
+		<Rule Id="SA1411" Action="None" />
+		<Rule Id="SA1410" Action="None" />
+		<Rule Id="SA1203" Action="None" />
+
+		<!-- Begin StyleCop.Analyzer specific rules -->
+		<Rule Id="SA0001" Action="None" />
+		<Rule Id="SA1028" Action="None" />
+
+		<!-- SA1127 and above are new to StyleCop analyzers -->
+		<Rule Id="SA1124" Action="None" />
+		<Rule Id="SA1135" Action="None" />
+		<Rule Id="SA1127" Action="None" />
+		<Rule Id="SA1128" Action="None" />
+		<Rule Id="SA1129" Action="None" />
+
+		<Rule Id="SA1314" Action="None" />
+		<Rule Id="SA1413" Action="None" />
+
+		<Rule Id="SA1629" Action="None" />
+	</Rules>
+</RuleSet>

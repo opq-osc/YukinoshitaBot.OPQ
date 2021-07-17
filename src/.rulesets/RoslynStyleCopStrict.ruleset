@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="RoslynStyleCopStrict" Description="Inherits the main ruleset and applies StyleCop strict settings on top." ToolsVersion="15.0">
+	<Include Path="RoslynAnalyzers.ruleset" Action="Default" />
+	<Include Path="StyleCopStrict.ruleset" Action="Default" />
+</RuleSet>
