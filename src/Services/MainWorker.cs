@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace YukinoshitaBot.Services
+namespace YukinoshitaBot
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -12,6 +12,9 @@ namespace YukinoshitaBot.Services
     using SocketIOClient;
     using YukinoshitaBot.Data;
     using YukinoshitaBot.Data.Content;
+    using YukinoshitaBot.Data.OpqApi;
+    using YukinoshitaBot.Extensions;
+    using YukinoshitaBot.Services;
 
     /// <summary>
     /// 工作线程
@@ -20,16 +23,19 @@ namespace YukinoshitaBot.Services
     {
         private readonly ILogger logger;
         private readonly IConfiguration configuration;
+        private readonly OpqApi opqApi;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWorker"/> class.
         /// </summary>
         /// <param name="logger">logger</param>
         /// <param name="configuration">config</param>
-        public MainWorker(ILogger<MainWorker> logger, IConfiguration configuration)
+        /// <param name="opqApi">opqApi</param>
+        public MainWorker(ILogger<MainWorker> logger, IConfiguration configuration, OpqApi opqApi)
         {
             this.logger = logger;
             this.configuration = configuration;
+            this.opqApi = opqApi;
         }
 
         /// <inheritdoc/>
@@ -64,6 +70,13 @@ namespace YukinoshitaBot.Services
                 {
                     case "TextMsg":
                         string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
+                        if (textMsg == "test")
+                        {
+                            new TextMessageRequest("This is Yukinoshita bot.")
+                                .SendToGroup(respData.CurrentPacket?.Data?.FromGroupId ?? default)
+                                .AddToQueue(this.opqApi);
+                        }
+
                         break;
                     case "PicMsg":
                         var picMsg = respData.CurrentPacket?.Data?.ParseContent<GroupMixtureContent>();

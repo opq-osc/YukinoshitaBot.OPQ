@@ -4,62 +4,62 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
-        <member name="T:YukinoshitaBot.Data.Content.FriendPictureContent">
+        <member name="T:YukinoshitaBot.Data.Content.FriendMixtureContent">
             <summary>
-            好友图片消息
+            好友图文消息
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.Content">
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.Content">
             <summary>
             文本消息
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.FriendPic">
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.FriendPic">
             <summary>
             图片列表
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.FileSize">
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.FileSize">
             <summary>
             文件大小，仅当图片为闪照时有效
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.Url">
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.Url">
             <summary>
             文件URL，仅当图片为闪照时有效
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.IsFlashPicture">
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.IsFlashPicture">
             <summary>
             是否闪照
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.Data.Content.GroupPictureContent">
+        <member name="T:YukinoshitaBot.Data.Content.GroupMixtureContent">
             <summary>
-            群图片消息
+            群图文消息
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.Content">
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.Content">
             <summary>
             文本消息
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.GroupPic">
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.GroupPic">
             <summary>
             图片列表
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.FileSize">
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.FileSize">
             <summary>
             文件大小，仅当图片为闪照时有效
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.Url">
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.Url">
             <summary>
             文件URL，仅当图片为闪照时有效
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.IsFlashPicture">
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.IsFlashPicture">
             <summary>
             是否闪照
             </summary>
@@ -172,6 +172,88 @@
             <typeparam name="T">目标类型</typeparam>
             <returns>解析后类型的实例</returns>
         </member>
+        <member name="T:YukinoshitaBot.Data.OpqApi.MessageRequestBase">
+            <summary>
+            用于发送消息的基类
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.MessageRequestBase.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.OpqApi.MessageRequestBase"/> class.
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.ToUserUid">
+            <summary>
+            接收者ID
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.SendToType">
+            <summary>
+            发送类型
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.SendMsgType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.Content">
+            <summary>
+            内容
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.HttpRequestMessage">
+            <summary>
+            与对象关联的<see cref="T:System.Net.Http.HttpRequestMessage"/>
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.MessageRequestBase.SendToFriend(System.Int64)">
+            <summary>
+            发送给好友
+            </summary>
+            <param name="friendQQ">好友QQ</param>
+            <returns>用于发送好友消息的<see cref="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.HttpRequestMessage"/></returns>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.MessageRequestBase.SendToGroup(System.Int64)">
+            <summary>
+            发送到群
+            </summary>
+            <param name="groupId">好友QQ</param>
+            <returns>用于发送群消息的<see cref="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.HttpRequestMessage"/></returns>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.MessageRequestBase.SendToGroupMember(System.Int64,System.Int64)">
+            <summary>
+            发送到临时会话
+            </summary>
+            <param name="userQQ">目的QQ号</param>
+            <param name="groupId">该用户所在群的群号</param>
+            <returns>用于发送临时会话的<see cref="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.HttpRequestMessage"/></returns>
+        </member>
+        <member name="T:YukinoshitaBot.Data.OpqApi.TextMessageRequest">
+            <summary>
+            文本消息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.TextMessageRequest.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.OpqApi.TextMessageRequest"/> class.
+            </summary>
+            <param name="content">消息内容</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.TextMessageRequest.GroupID">
+            <summary>
+            临时消息的群号
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.TextMessageRequest.SendToFriend(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.TextMessageRequest.SendToGroup(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.TextMessageRequest.SendToGroupMember(System.Int64,System.Int64)">
+            <inheritdoc/>
+        </member>
         <member name="T:YukinoshitaBot.Data.PictureInfo">
             <summary>
             图片信息
@@ -229,23 +311,25 @@
             数据包
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.MainWorker">
+        <member name="T:YukinoshitaBot.Extensions.HttpRequestMessageExtension">
             <summary>
-            工作线程
+            <see cref="T:System.Net.Http.HttpRequestMessage"/>的拓展
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.MainWorker},Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:YukinoshitaBot.Extensions.HttpRequestMessageExtension.AddToQueue(System.Net.Http.HttpRequestMessage,YukinoshitaBot.Services.OpqApi)">
             <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.MainWorker"/> class.
+            将请求添加到队列
             </summary>
-            <param name="logger">logger</param>
-            <param name="configuration">config</param>
+            <param name="httpRequest">Http请求</param>
+            <param name="opqApi">OPQ接口对象</param>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.StartAsync(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:YukinoshitaBot.MainWorker.ExecuteAsync(System.Threading.CancellationToken)">
-            <inheritdoc/>
+        <member name="M:YukinoshitaBot.Extensions.HttpRequestMessageExtension.SendAsync(System.Net.Http.HttpRequestMessage,System.Net.Http.HttpClient)">
+            <summary>
+            直接发送请求
+            </summary>
+            <param name="httpRequest">Http请求</param>
+            <param name="httpClient">使用该<see cref="T:System.Net.Http.HttpClient"/>发送</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
         </member>
         <member name="T:YukinoshitaBot.Program">
             <summary>
@@ -258,6 +342,67 @@
             </summary>
             <param name="args">控制台参数</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>的实例</returns>
+        </member>
+        <member name="T:YukinoshitaBot.MainWorker">
+            <summary>
+            工作线程
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.MainWorker},Microsoft.Extensions.Configuration.IConfiguration,YukinoshitaBot.Services.OpqApi)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.MainWorker"/> class.
+            </summary>
+            <param name="logger">logger</param>
+            <param name="configuration">config</param>
+            <param name="opqApi">opqApi</param>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.ExecuteAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YukinoshitaBot.Services.MessageQueueScanner">
+            <summary>
+            消息队列扫描线程
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.MessageQueueScanner.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Services.MessageQueueScanner},Microsoft.Extensions.Configuration.IConfiguration,YukinoshitaBot.Services.OpqApi)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.MessageQueueScanner"/> class.
+            </summary>
+            <param name="logger">日志</param>
+            <param name="configuration">配置</param>
+            <param name="opqApi">OPQ服务</param>
+        </member>
+        <member name="M:YukinoshitaBot.Services.MessageQueueScanner.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.MessageQueueScanner.ExecuteAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YukinoshitaBot.Services.OpqApi">
+            <summary>
+            OPQ机器人Http接口
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.OpqApi.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Services.OpqApi},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.OpqApi"/> class.
+            </summary>
+            <param name="logger">日志</param>
+            <param name="configuration">配置</param>
+        </member>
+        <member name="P:YukinoshitaBot.Services.OpqApi.MessageQueue">
+            <summary>
+            存放待发送的Http请求
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.OpqApi.AddRequest(System.Net.Http.HttpRequestMessage)">
+            <summary>
+            向队列中添加一个请求
+            </summary>
+            <param name="request">要添加的请求</param>
         </member>
     </members>
 </doc>

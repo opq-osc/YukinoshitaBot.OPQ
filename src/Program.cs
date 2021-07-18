@@ -53,6 +53,8 @@ namespace YukinoshitaBot
             })
             .ConfigureServices((context, services) =>
             {
+                services.AddSingleton<OpqApi>();
+                services.AddHostedService<MessageQueueScanner>();
                 services.AddHostedService<MainWorker>();
             })
             .UseSerilog();
