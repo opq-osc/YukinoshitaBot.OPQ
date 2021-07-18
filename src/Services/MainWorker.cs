@@ -72,7 +72,8 @@ namespace YukinoshitaBot
                         string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
                         if (textMsg == "test")
                         {
-                            new TextMessageRequest("This is Yukinoshita bot.")
+                            new PictureMessageRequest(new System.Uri("https://img.moegirl.org.cn/common/8/88/眼镜雪乃.jpg"))
+                                .AddContent("This is Yukinoshita bot.")
                                 .SendToGroup(respData.CurrentPacket?.Data?.FromGroupId ?? default)
                                 .AddToQueue(this.opqApi);
                         }

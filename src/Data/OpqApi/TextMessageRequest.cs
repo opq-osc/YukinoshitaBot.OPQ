@@ -23,46 +23,31 @@ namespace YukinoshitaBot.Data.OpqApi
             this.SendMsgType = "TextMsg";
         }
 
-        /// <summary>
-        /// 临时消息的群号
-        /// </summary>
-        public long? GroupID { get; set; }
-
         /// <inheritdoc/>
         public override HttpRequestMessage SendToFriend(long friendQQ)
         {
-            this.SendToType = 1;
-            this.ToUserUid = friendQQ;
-            this.GroupID = null;
+            var request = base.SendToFriend(friendQQ);
+            request.Content = new StringContent(JsonSerializer.Serialize(this, typeof(TextMessageRequest)), Encoding.UTF8, "application/json");
 
-            this.HttpRequestMessage.Content = new StringContent(JsonSerializer.Serialize(this, typeof(TextMessageRequest)), Encoding.UTF8, "application/json");
-
-            return base.SendToFriend(friendQQ);
+            return request;
         }
 
         /// <inheritdoc/>
         public override HttpRequestMessage SendToGroup(long groupId)
         {
-            this.SendToType = 2;
-            this.ToUserUid = groupId;
-            this.GroupID = null;
+            var request = base.SendToGroup(groupId);
+            request.Content = new StringContent(JsonSerializer.Serialize(this, typeof(TextMessageRequest)), Encoding.UTF8, "application/json");
 
-            string content = JsonSerializer.Serialize(this, typeof(TextMessageRequest));
-            this.HttpRequestMessage.Content = new StringContent(content, Encoding.UTF8, "application/json");
-
-            return base.SendToGroup(groupId);
+            return request;
         }
 
         /// <inheritdoc/>
         public override HttpRequestMessage SendToGroupMember(long userQQ, long groupId)
         {
-            this.SendToType = 3;
-            this.ToUserUid = userQQ;
-            this.GroupID = groupId;
+            var request = base.SendToGroupMember(userQQ, groupId);
+            request.Content = new StringContent(JsonSerializer.Serialize(this, typeof(TextMessageRequest)), Encoding.UTF8, "application/json");
 
-            this.HttpRequestMessage.Content = new StringContent(JsonSerializer.Serialize(this, typeof(TextMessageRequest)), Encoding.UTF8, "application/json");
-
-            return base.SendToGroupMember(userQQ, groupId);
+            return request;
         }
     }
 }

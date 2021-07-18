@@ -11,6 +11,8 @@ namespace YukinoshitaBot
     using Serilog.Events;
     using YukinoshitaBot.Services;
 
+    // TODO 图片消息处理 消息回复 事件系统
+
     /// <summary>
     /// This is the main class of the application.
     /// </summary>

@@ -202,6 +202,11 @@
             内容
             </summary>
         </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.GroupID">
+            <summary>
+            临时消息的群号
+            </summary>
+        </member>
         <member name="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.HttpRequestMessage">
             <summary>
             与对象关联的<see cref="T:System.Net.Http.HttpRequestMessage"/>
@@ -229,6 +234,60 @@
             <param name="groupId">该用户所在群的群号</param>
             <returns>用于发送临时会话的<see cref="P:YukinoshitaBot.Data.OpqApi.MessageRequestBase.HttpRequestMessage"/></returns>
         </member>
+        <member name="T:YukinoshitaBot.Data.OpqApi.PictureMessageRequest">
+            <summary>
+            图片消息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.OpqApi.PictureMessageRequest"/> class.
+            </summary>
+            <param name="base64EncodedImage">base64图片</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.OpqApi.PictureMessageRequest"/> class.
+            </summary>
+            <param name="picUri">图片URL</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.#ctor(System.IO.FileInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.OpqApi.PictureMessageRequest"/> class.
+            </summary>
+            <param name="localPicture">本地图片文件</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.PicUrl">
+            <summary>
+            图片URL
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.PicPath">
+            <summary>
+            本地图片路径
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.PicBase64Buf">
+            <summary>
+            图片base64
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.AddContent(System.String)">
+            <summary>
+            为图片消息添加文本内容
+            </summary>
+            <param name="content">文本消息</param>
+            <returns>添加文本消息后的图文消息</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.SendToFriend(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.SendToGroup(System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Data.OpqApi.PictureMessageRequest.SendToGroupMember(System.Int64,System.Int64)">
+            <inheritdoc/>
+        </member>
         <member name="T:YukinoshitaBot.Data.OpqApi.TextMessageRequest">
             <summary>
             文本消息
@@ -239,11 +298,6 @@
             Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.OpqApi.TextMessageRequest"/> class.
             </summary>
             <param name="content">消息内容</param>
-        </member>
-        <member name="P:YukinoshitaBot.Data.OpqApi.TextMessageRequest.GroupID">
-            <summary>
-            临时消息的群号
-            </summary>
         </member>
         <member name="M:YukinoshitaBot.Data.OpqApi.TextMessageRequest.SendToFriend(System.Int64)">
             <inheritdoc/>
