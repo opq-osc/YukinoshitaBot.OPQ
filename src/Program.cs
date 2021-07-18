@@ -5,11 +5,11 @@
 namespace YukinoshitaBot
 {
     using System;
-    using System.Threading.Tasks;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Serilog;
     using Serilog.Events;
+    using YukinoshitaBot.Services;
 
     /// <summary>
     /// This is the main class of the application.

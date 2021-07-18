@@ -1,4 +1,4 @@
-﻿// <copyright file="FriendPictureContent.cs" company="PlaceholderCompany">
+﻿// <copyright file="GroupMixtureContent.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -8,9 +8,9 @@ namespace YukinoshitaBot.Data.Content
     using System.Text.Json.Serialization;
 
     /// <summary>
-    /// 好友图片消息
+    /// 群图文消息
     /// </summary>
-    public class FriendPictureContent
+    public class GroupMixtureContent
     {
         /// <summary>
         /// 文本消息
@@ -20,7 +20,7 @@ namespace YukinoshitaBot.Data.Content
         /// <summary>
         /// 图片列表
         /// </summary>
-        public List<PictureInfo>? FriendPic { get; set; }
+        public List<PictureInfo>? GroupPic { get; set; }
 
         /// <summary>
         /// 文件大小，仅当图片为闪照时有效

@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace YukinoshitaBot
+namespace YukinoshitaBot.Services
 {
     using System.Threading;
     using System.Threading.Tasks;
@@ -66,7 +66,7 @@ namespace YukinoshitaBot
                         string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
                         break;
                     case "PicMsg":
-                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<GroupPictureContent>();
+                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<GroupMixtureContent>();
                         break;
                 }
             });
@@ -86,10 +86,10 @@ namespace YukinoshitaBot
                         string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
                         break;
                     case "PicMsg":
-                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<FriendPictureContent>();
+                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<FriendMixtureContent>();
                         break;
                     case "TempSessionMsg":
-                        var tempSessionMsg = respData.CurrentPacket?.Data?.ParseContent<FriendPictureContent>();
+                        var tempSessionMsg = respData.CurrentPacket?.Data?.ParseContent<FriendMixtureContent>();
                         break;
                 }
             });
