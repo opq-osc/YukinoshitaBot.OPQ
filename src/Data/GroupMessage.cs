@@ -42,7 +42,7 @@ namespace YukinoshitaBot.Data
         /// <summary>
         /// 消息随机数
         /// </summary>
-        public int MsgRandom { get; set; }
+        public long MsgRandom { get; set; }
 
         /// <summary>
         /// 红包信息

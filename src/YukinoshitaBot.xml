@@ -4,6 +4,66 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
+        <member name="T:YukinoshitaBot.Data.Content.FriendPictureContent">
+            <summary>
+            好友图片消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.Content">
+            <summary>
+            文本消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.FriendPic">
+            <summary>
+            图片列表
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.FileSize">
+            <summary>
+            文件大小，仅当图片为闪照时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.Url">
+            <summary>
+            文件URL，仅当图片为闪照时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendPictureContent.IsFlashPicture">
+            <summary>
+            是否闪照
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Content.GroupPictureContent">
+            <summary>
+            群图片消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.Content">
+            <summary>
+            文本消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.GroupPic">
+            <summary>
+            图片列表
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.FileSize">
+            <summary>
+            文件大小，仅当图片为闪照时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.Url">
+            <summary>
+            文件URL，仅当图片为闪照时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupPictureContent.IsFlashPicture">
+            <summary>
+            是否闪照
+            </summary>
+        </member>
         <member name="T:YukinoshitaBot.Data.FriendMessage">
             <summary>
             好友消息
@@ -26,7 +86,7 @@
         </member>
         <member name="P:YukinoshitaBot.Data.FriendMessage.GroupID">
             <summary>
-            发送者所在群的群号，仅<see cref="!:MsgType"/>为TempSessionMsg时有效
+            发送者所在群的群号，仅<see cref="P:YukinoshitaBot.Data.MessageBase.MsgType"/>为TempSessionMsg时有效
             </summary>
         </member>
         <member name="P:YukinoshitaBot.Data.FriendMessage.RedBaginfo">

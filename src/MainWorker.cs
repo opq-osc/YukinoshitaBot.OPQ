@@ -11,6 +11,7 @@ namespace YukinoshitaBot
     using Microsoft.Extensions.Logging;
     using SocketIOClient;
     using YukinoshitaBot.Data;
+    using YukinoshitaBot.Data.Content;
 
     /// <summary>
     /// 工作线程
@@ -36,7 +37,7 @@ namespace YukinoshitaBot
         {
             var botConfig = this.configuration.GetSection("MeowBotSettings");
             var httpApi = botConfig.GetValue<string>("HttpApi");
-            var loginQQ = botConfig.GetValue<string>("LoginQQ");
+            var loginQQ = botConfig.GetValue<long>("LoginQQ");
             var wsApi = botConfig.GetValue<string>("WebSocketApi");
 
             this.logger.LogInformation("Starting YukinoshitaBot...");
@@ -52,10 +53,45 @@ namespace YukinoshitaBot
             client.On("OnGroupMsgs", resp =>
             {
                 var respData = resp.GetValue<SocketResponse<GroupMessage>>();
+
+                // 过滤自身消息
+                if (respData.CurrentPacket?.Data?.FromUserId == loginQQ)
+                {
+                    return;
+                }
+
+                switch (respData.CurrentPacket?.Data?.MsgType)
+                {
+                    case "TextMsg":
+                        string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
+                        break;
+                    case "PicMsg":
+                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<GroupPictureContent>();
+                        break;
+                }
             });
             client.On("OnFriendMsgs", resp =>
             {
                 var respData = resp.GetValue<SocketResponse<FriendMessage>>();
+
+                // 过滤自身消息
+                if (respData.CurrentPacket?.Data?.FromUin == respData.CurrentQQ)
+                {
+                    return;
+                }
+
+                switch (respData.CurrentPacket?.Data?.MsgType)
+                {
+                    case "TextMsg":
+                        string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
+                        break;
+                    case "PicMsg":
+                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<FriendPictureContent>();
+                        break;
+                    case "TempSessionMsg":
+                        var tempSessionMsg = respData.CurrentPacket?.Data?.ParseContent<FriendPictureContent>();
+                        break;
+                }
             });
 
             await client.ConnectAsync();
