@@ -6,11 +6,11 @@ namespace YukinoshitaBot
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using MeowIOTBot;
-    using MeowIOTBot.NetworkHelper;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
+    using SocketIOClient;
+    using YukinoshitaBot.Data;
 
     /// <summary>
     /// 工作线程
@@ -39,48 +39,32 @@ namespace YukinoshitaBot
             var loginQQ = botConfig.GetValue<string>("LoginQQ");
             var wsApi = botConfig.GetValue<string>("WebSocketApi");
 
-            this.logger.LogInformation("Starting MeowBot...");
+            this.logger.LogInformation("Starting YukinoshitaBot...");
             this.logger.LogInformation("HttpApi: {httpApi}", httpApi);
             this.logger.LogInformation("LoginQQ: {loginQQ}", loginQQ);
             this.logger.LogInformation("WsApi: {wsApi}", wsApi);
 
-            PostHelper.CallerUrl = httpApi;
-            PostHelper.LoginQQ = loginQQ;
-            using var recv = await new MeowIOTClient(wsApi, LogType.Verbose).Connect().ConfigureAwait(false);
+            var client = new SocketIO(wsApi);
+            client.OnConnected += (s, e) => 
+            {
+                this.logger.LogInformation("YukinoshitaBot is now connected.");
+            };
+            client.On("OnGroupMsgs", resp =>
+            {
+                var respData = resp.GetValue<SocketResponse<GroupMessage>>();
+            });
+            client.On("OnFriendMsgs", resp =>
+            {
+                var respData = resp.GetValue<SocketResponse<FriendMessage>>();
+            });
 
-            this.logger.LogInformation("MeowIOTBot is now connected.");
-
-            recv._FriendTextMsgRecieve += this.Recv_FriendTextMsgRecieve;
-            recv._GroupTextMsgRecieve += this.Recv_GroupTextMsgRecieve;
+            await client.ConnectAsync();
         }
 
         /// <inheritdoc/>
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             return Task.CompletedTask;
-        }
-
-        private void Recv_FriendTextMsgRecieve(MeowIOTBot.QQ.QQMessage.QQRecieveMessage.QQRecieveMessage sender, MeowIOTBot.QQ.QQMessage.QQRecieveMessage.TextMsg e)
-        {
-            var fromQQ = sender.IOBody.MsgFromQQ;
-            var msg = e.Content;
-
-            if (fromQQ != sender.CurrentQQ)
-            {
-                // 好友消息处理
-            }
-        }
-
-        private void Recv_GroupTextMsgRecieve(MeowIOTBot.QQ.QQMessage.QQRecieveMessage.QQRecieveMessage sender, MeowIOTBot.QQ.QQMessage.QQRecieveMessage.TextMsg e)
-        {
-            var fromGroup = sender.IOBody.FromGroupId;
-            var fromQQ = sender.IOBody.MsgFromQQ;
-            var msg = e.Content;
-
-            if (fromQQ != sender.CurrentQQ)
-            {
-                // 群消息处理
-            }
         }
     }
 }

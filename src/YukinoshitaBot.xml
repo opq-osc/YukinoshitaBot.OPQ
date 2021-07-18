@@ -4,28 +4,200 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
+        <member name="T:YukinoshitaBot.Data.FriendMessage">
+            <summary>
+            好友消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.FriendMessage.FromUin">
+            <summary>
+            发送者QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.FriendMessage.ToUin">
+            <summary>
+            接收者QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.FriendMessage.MsgSeq">
+            <summary>
+            消息序列
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.FriendMessage.GroupID">
+            <summary>
+            发送者所在群的群号，仅<see cref="!:MsgType"/>为TempSessionMsg时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.FriendMessage.RedBaginfo">
+            <summary>
+            红包信息
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.GroupMessage">
+            <summary>
+            群消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.FromGroupId">
+            <summary>
+            消息来源群号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.FromGroupName">
+            <summary>
+            消息来源群名称
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.FromUserId">
+            <summary>
+            消息来源用户QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.FromNickName">
+            <summary>
+            消息来源用户群昵称
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.MsgTime">
+            <summary>
+            消息时间(10位时间戳)
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.MsgSeq">
+            <summary>
+            消息序列号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.MsgRandom">
+            <summary>
+            消息随机数
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.GroupMessage.RedBaginfo">
+            <summary>
+            红包信息
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.IResponsiveMessage">
+            <summary>
+            消息回复接口
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.IResponsiveMessage.Response(System.String)">
+            <summary>
+            回复消息
+            </summary>
+            <param name="message">要回复的消息</param>
+        </member>
+        <member name="T:YukinoshitaBot.Data.MessageBase">
+            <summary>
+            消息基类，提供消息解析功能
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.MessageBase.Content">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.MessageBase.MsgType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.MessageBase.ParseContent``1">
+            <summary>
+            解析Json格式的消息内容
+            </summary>
+            <typeparam name="T">目标类型</typeparam>
+            <returns>解析后类型的实例</returns>
+        </member>
+        <member name="T:YukinoshitaBot.Data.PictureInfo">
+            <summary>
+            图片信息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.PictureInfo.FileId">
+            <summary>
+            文件序号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.PictureInfo.FileMD5">
+            <summary>
+            文件MD5
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.PictureInfo.FileSize">
+            <summary>
+            文件大小
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.PictureInfo.Url">
+            <summary>
+            文件URL
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.SocketPacket`1">
+            <summary>
+            SocketIO数据包格式
+            </summary>
+            <typeparam name="T">消息类型</typeparam>
+        </member>
+        <member name="P:YukinoshitaBot.Data.SocketPacket`1.WebConnId">
+            <summary>
+            连接ID
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.SocketPacket`1.Data">
+            <summary>
+            消息体
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.SocketResponse`1">
+            <summary>
+            SocketIO数据返回类型
+            </summary>
+            <typeparam name="T">消息类型</typeparam>
+        </member>
+        <member name="P:YukinoshitaBot.Data.SocketResponse`1.CurrentQQ">
+            <summary>
+            绑定到Socket的QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.SocketResponse`1.CurrentPacket">
+            <summary>
+            数据包
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.MainWorker">
+            <summary>
+            工作线程
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.MainWorker},Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.MainWorker"/> class.
+            </summary>
+            <param name="logger">logger</param>
+            <param name="configuration">config</param>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.ExecuteAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="T:YukinoshitaBot.Program">
             <summary>
             This is the main class of the application.
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.Worker">
+        <member name="M:YukinoshitaBot.Program.CreateBuilder(System.String[])">
             <summary>
-            工作线程
+            创建并配置HostBuilder
             </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Worker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Worker},Microsoft.Extensions.Configuration.IConfiguration)">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Worker"/> class.
-            </summary>
-            <param name="logger">logger</param>
-            <param name="configuration">config</param>
-        </member>
-        <member name="M:YukinoshitaBot.Worker.StartAsync(System.Threading.CancellationToken)">
-            <inheritdoc/>
-        </member>
-        <member name="M:YukinoshitaBot.Worker.ExecuteAsync(System.Threading.CancellationToken)">
-            <inheritdoc/>
+            <param name="args">控制台参数</param>
+            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>的实例</returns>
         </member>
     </members>
 </doc>
