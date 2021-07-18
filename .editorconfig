@@ -1,0 +1,4 @@
+﻿[*.{cs,vb}]
+
+# IDE0003: 删除限定
+dotnet_diagnostic.IDE0003.severity = none
