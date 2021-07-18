@@ -4,6 +4,7 @@
 
 namespace YukinoshitaBot
 {
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
@@ -12,6 +13,7 @@ namespace YukinoshitaBot
     using SocketIOClient;
     using YukinoshitaBot.Data;
     using YukinoshitaBot.Data.Content;
+    using YukinoshitaBot.Data.Event;
     using YukinoshitaBot.Data.OpqApi;
     using YukinoshitaBot.Extensions;
     using YukinoshitaBot.Services;
@@ -61,27 +63,28 @@ namespace YukinoshitaBot
                 var respData = resp.GetValue<SocketResponse<GroupMessage>>();
 
                 // 过滤自身消息
-                if (respData.CurrentPacket?.Data?.FromUserId == loginQQ)
+                if (respData.CurrentPacket?.Data?.FromUserId == respData.CurrentQQ)
                 {
                     return;
                 }
 
-                switch (respData.CurrentPacket?.Data?.MsgType)
-                {
-                    case "TextMsg":
-                        string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
-                        if (textMsg == "test")
-                        {
-                            new PictureMessageRequest(new System.Uri("https://img.moegirl.org.cn/common/8/88/眼镜雪乃.jpg"))
-                                .AddContent("This is Yukinoshita bot.")
-                                .SendToGroup(respData.CurrentPacket?.Data?.FromGroupId ?? default)
-                                .AddToQueue(this.opqApi);
-                        }
+                var msg = Message.Parse(respData.CurrentPacket?.Data);
+                msg.OpqApi = this.opqApi;
 
-                        break;
-                    case "PicMsg":
-                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<GroupMixtureContent>();
-                        break;
+                if (msg is TextMessage textMsg)
+                {
+                    if (textMsg.Content.StartsWith("read "))
+                    {
+                        textMsg.Reply(new TextMessageRequest(textMsg.Content[5..]));
+                    }
+                }
+
+                if (msg is PictureMessage picMsg)
+                {
+                    if (picMsg.Content.StartsWith("read"))
+                    {
+                        picMsg.Reply(new PictureMessageRequest(new Uri(picMsg.FirstPicture)));
+                    }
                 }
             });
             client.On("OnFriendMsgs", resp =>

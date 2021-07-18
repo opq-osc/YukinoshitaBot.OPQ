@@ -1,4 +1,8 @@
-﻿namespace YukinoshitaBot.Data.OpqApi
+﻿// <copyright file="PictureMessageRequest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace YukinoshitaBot.Data.OpqApi
 {
     using System;
     using System.Collections.Generic;

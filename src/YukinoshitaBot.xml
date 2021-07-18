@@ -64,6 +64,175 @@
             是否闪照
             </summary>
         </member>
+        <member name="T:YukinoshitaBot.Data.Event.MessageType">
+            <summary>
+            消息类型枚举
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Event.SenderType">
+            <summary>
+            发消息者类型枚举
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Event.Message">
+            <summary>
+            消息基类，提供类型判断、回复等功能
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.#ctor(YukinoshitaBot.Data.Event.SenderInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.Message"/> class.
+            </summary>
+            <param name="sender">发送者信息</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.Message.MessageType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.Message.SenderInfo">
+            <summary>
+            消息发送者
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.Message.OpqApi">
+            <summary>
+            OpqApi
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.Parse(YukinoshitaBot.Data.GroupMessage)">
+            <summary>
+            从<see cref="T:YukinoshitaBot.Data.GroupMessage"/>创建Message
+            </summary>
+            <param name="rawMessage">原始消息</param>
+            <exception cref="T:System.ArgumentException">ArgumentException</exception>
+            <exception cref="T:System.NotImplementedException">NotImplementedException</exception>
+            <returns><see cref="T:YukinoshitaBot.Data.Event.Message"/>的子类</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.Parse(YukinoshitaBot.Data.FriendMessage)">
+            <summary>
+            从<see cref="T:YukinoshitaBot.Data.FriendMessage"/>创建Message
+            </summary>
+            <param name="rawMessage">原始消息</param>
+            <exception cref="T:System.ArgumentException">ArgumentException</exception>
+            <exception cref="T:System.NotImplementedException">NotImplementedException</exception>
+            <returns><see cref="T:YukinoshitaBot.Data.Event.Message"/>的子类</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.Reply(YukinoshitaBot.Data.OpqApi.MessageRequestBase)">
+            <summary>
+            回复消息
+            </summary>
+            <param name="resp">要回复的消息</param>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Event.PictureMessage">
+            <summary>
+            图片消息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.PictureMessage.#ctor(YukinoshitaBot.Data.Event.SenderInfo,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.PictureMessage"/> class.
+            </summary>
+            <param name="sender">发送者</param>
+            <param name="picUrls">图片URL</param>
+            <param name="content">文本消息</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.PictureMessage.#ctor(YukinoshitaBot.Data.Event.SenderInfo,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.PictureMessage"/> class.
+            </summary>
+            <param name="sender">发送者</param>
+            <param name="flashPicUrl">闪照URL</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.PictureMessage.PictureUrls">
+            <summary>
+            图片URL
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.PictureMessage.Content">
+            <summary>
+            文本消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.PictureMessage.IsFlashPicture">
+            <summary>
+            是否闪照
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.PictureMessage.FirstPicture">
+            <summary>
+            获取第一张图片的URL
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Event.SenderInfo">
+            <summary>
+            发消息者信息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.SenderInfo.#ctor(System.Int64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.SenderInfo"/> struct.
+            </summary>
+            <param name="fromQQ">好友QQ</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.SenderInfo.#ctor(System.Int64,System.Int64)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.SenderInfo"/> struct.
+            </summary>
+            <param name="fromQQ">群友QQ</param>
+            <param name="fromGroup">群号</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.SenderInfo.#ctor(System.Int64,System.Int64,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.SenderInfo"/> struct.
+            </summary>
+            <param name="fromQQ">群友QQ</param>
+            <param name="fromGroup">群号</param>
+            <param name="groupName">群名称</param>
+            <param name="nickName">群友群昵称</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.SenderInfo.FromGroupId">
+            <summary>
+            消息来源群号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.SenderInfo.FromGroupName">
+            <summary>
+            消息来源群名称，仅群消息有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.SenderInfo.FromQQ">
+            <summary>
+            消息来源用户QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.SenderInfo.FromNickName">
+            <summary>
+            消息来源用户群昵称，仅群消息有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.SenderInfo.SenderType">
+            <summary>
+            发送者类型
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Event.TextMessage">
+            <summary>
+            文本消息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.TextMessage.#ctor(YukinoshitaBot.Data.Event.SenderInfo,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.TextMessage"/> class.
+            </summary>
+            <param name="sender">发送者信息</param>
+            <param name="content">文本消息</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.TextMessage.Content">
+            <summary>
+            文本消息
+            </summary>
+        </member>
         <member name="T:YukinoshitaBot.Data.FriendMessage">
             <summary>
             好友消息
@@ -138,17 +307,6 @@
             <summary>
             红包信息
             </summary>
-        </member>
-        <member name="T:YukinoshitaBot.Data.IResponsiveMessage">
-            <summary>
-            消息回复接口
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.IResponsiveMessage.Response(System.String)">
-            <summary>
-            回复消息
-            </summary>
-            <param name="message">要回复的消息</param>
         </member>
         <member name="T:YukinoshitaBot.Data.MessageBase">
             <summary>
