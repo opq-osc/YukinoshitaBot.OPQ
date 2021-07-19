@@ -4,6 +4,21 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
+        <member name="T:YukinoshitaBot.Controllers.TestController1">
+            <summary>
+            测试用Controller
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Controllers.TestController2">
+            <summary>
+            测试用Controller
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute">
+            <summary>
+            定义为YukinoshitaController
+            </summary>
+        </member>
         <member name="T:YukinoshitaBot.Data.Content.FriendMixtureContent">
             <summary>
             好友图文消息
@@ -550,9 +565,16 @@
         </member>
         <member name="M:YukinoshitaBot.Extensions.ServiceCollectionExtension.AddYukinoshitaBot``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            添加YukinoshitaBot服务
+            添加YukinoshitaBot服务，使用自定义消息处理器
             </summary>
             <typeparam name="MessageHandlerType">要使用的消息处理器类型</typeparam>
+            <param name="services">服务容器</param>
+            <returns>链式调用服务容器</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Extensions.ServiceCollectionExtension.AddYukinoshitaBot(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加YukinoshitaBot服务，使用YukinoshitaController处理消息
+            </summary>
             <param name="services">服务容器</param>
             <returns>链式调用服务容器</returns>
         </member>
@@ -654,6 +676,34 @@
             <inheritdoc/>
         </member>
         <member name="M:YukinoshitaBot.Services.Repeater.OnGroupTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YukinoshitaBot.Services.YukinoshitaController">
+            <summary>
+            实现控制器
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.YukinoshitaController"/> class.
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.AddController(System.Object)">
+            <summary>
+            添加控制器
+            </summary>
+            <param name="controller">要添加的控制器</param>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnFriendPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnFriendTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnGroupPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnGroupTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
             <inheritdoc/>
         </member>
         <member name="T:YukinoshitaBot.MainWorker">

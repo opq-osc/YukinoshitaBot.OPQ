@@ -5,6 +5,7 @@
 namespace YukinoshitaBot
 {
     using System;
+    using System.Reflection;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Serilog;
@@ -56,7 +57,7 @@ namespace YukinoshitaBot
             })
             .ConfigureServices((context, services) =>
             {
-                services.AddYukinoshitaBot<Repeater>();
+                services.AddYukinoshitaBot();
             })
             .UseSerilog();
     }
