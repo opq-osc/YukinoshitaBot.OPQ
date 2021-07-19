@@ -555,24 +555,34 @@
             <param name="args">控制台参数</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>的实例</returns>
         </member>
-        <member name="T:YukinoshitaBot.MainWorker">
+        <member name="T:YukinoshitaBot.Services.IMessageHandler">
             <summary>
-            工作线程
+            消息处理器
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.MainWorker},Microsoft.Extensions.Configuration.IConfiguration,YukinoshitaBot.Services.OpqApi)">
+        <member name="M:YukinoshitaBot.Services.IMessageHandler.OnGroupTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
             <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.MainWorker"/> class.
+            群文本消息处理
             </summary>
-            <param name="logger">logger</param>
-            <param name="configuration">config</param>
-            <param name="opqApi">opqApi</param>
+            <param name="msg">消息</param>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.StartAsync(System.Threading.CancellationToken)">
-            <inheritdoc/>
+        <member name="M:YukinoshitaBot.Services.IMessageHandler.OnGroupPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
+            <summary>
+            群图片消息处理
+            </summary>
+            <param name="msg">消息</param>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.ExecuteAsync(System.Threading.CancellationToken)">
-            <inheritdoc/>
+        <member name="M:YukinoshitaBot.Services.IMessageHandler.OnFriendTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
+            <summary>
+            好友文本消息处理
+            </summary>
+            <param name="msg">消息</param>
+        </member>
+        <member name="M:YukinoshitaBot.Services.IMessageHandler.OnFriendPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
+            <summary>
+            好友图片消息处理
+            </summary>
+            <param name="msg">消息</param>
         </member>
         <member name="T:YukinoshitaBot.Services.MessageQueueScanner">
             <summary>
@@ -615,6 +625,43 @@
             向队列中添加一个请求
             </summary>
             <param name="request">要添加的请求</param>
+        </member>
+        <member name="T:YukinoshitaBot.Services.Repeater">
+            <summary>
+            复读机
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.Repeater.OnFriendPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.Repeater.OnFriendTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.Repeater.OnGroupPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.Repeater.OnGroupTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
+            <inheritdoc/>
+        </member>
+        <member name="T:YukinoshitaBot.MainWorker">
+            <summary>
+            工作线程
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.MainWorker},Microsoft.Extensions.Configuration.IConfiguration,YukinoshitaBot.Services.OpqApi,YukinoshitaBot.Services.IMessageHandler)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.MainWorker"/> class.
+            </summary>
+            <param name="logger">logger</param>
+            <param name="configuration">config</param>
+            <param name="opqApi">opqApi</param>
+            <param name="msgHandler">message handler</param>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.StartAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.MainWorker.ExecuteAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
         </member>
     </members>
 </doc>

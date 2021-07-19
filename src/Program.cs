@@ -57,6 +57,7 @@ namespace YukinoshitaBot
             {
                 services.AddSingleton<OpqApi>();
                 services.AddHostedService<MessageQueueScanner>();
+                services.AddScoped<IMessageHandler, Repeater>();
                 services.AddHostedService<MainWorker>();
             })
             .UseSerilog();

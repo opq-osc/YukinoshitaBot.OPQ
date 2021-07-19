@@ -26,6 +26,7 @@ namespace YukinoshitaBot
         private readonly ILogger logger;
         private readonly IConfiguration configuration;
         private readonly OpqApi opqApi;
+        private readonly IMessageHandler msgHandler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWorker"/> class.
@@ -33,11 +34,13 @@ namespace YukinoshitaBot
         /// <param name="logger">logger</param>
         /// <param name="configuration">config</param>
         /// <param name="opqApi">opqApi</param>
-        public MainWorker(ILogger<MainWorker> logger, IConfiguration configuration, OpqApi opqApi)
+        /// <param name="msgHandler">message handler</param>
+        public MainWorker(ILogger<MainWorker> logger, IConfiguration configuration, OpqApi opqApi, IMessageHandler msgHandler)
         {
             this.logger = logger;
             this.configuration = configuration;
             this.opqApi = opqApi;
+            this.msgHandler = msgHandler;
         }
 
         /// <inheritdoc/>
@@ -68,23 +71,29 @@ namespace YukinoshitaBot
                     return;
                 }
 
-                var msg = Message.Parse(respData.CurrentPacket?.Data);
-                msg.OpqApi = this.opqApi;
-
-                if (msg is TextMessage textMsg)
+                Message? msg = null;
+                try 
                 {
-                    if (textMsg.Content.StartsWith("read "))
-                    {
-                        textMsg.Reply(new TextMessageRequest(textMsg.Content[5..]));
-                    }
+                    msg = Message.Parse(respData.CurrentPacket?.Data);
+                    msg.OpqApi = this.opqApi;
+                }
+                catch (Exception e)
+                {
+                    this.logger.LogError("Message parse failed : {error}", e);
+                    return;
                 }
 
-                if (msg is PictureMessage picMsg)
+                switch (msg)
                 {
-                    if (picMsg.Content.StartsWith("read"))
-                    {
-                        picMsg.Reply(new PictureMessageRequest(new Uri(picMsg.FirstPicture)));
-                    }
+                    case TextMessage textMsg:
+                        this.msgHandler.OnGroupTextMsgRecieved(textMsg);
+                        break;
+                    case PictureMessage picMsg:
+                        this.msgHandler.OnGroupPictureMsgRecieved(picMsg);
+                        break;
+                    default:
+                        this.logger.LogWarning("Unresolved message object Type {type}", msg.GetType());
+                        break;
                 }
             });
             client.On("OnFriendMsgs", resp =>
@@ -97,16 +106,28 @@ namespace YukinoshitaBot
                     return;
                 }
 
-                switch (respData.CurrentPacket?.Data?.MsgType)
+                Message? msg = null;
+                try
                 {
-                    case "TextMsg":
-                        string textMsg = respData.CurrentPacket?.Data?.Content ?? string.Empty;
+                    msg = Message.Parse(respData.CurrentPacket?.Data);
+                    msg.OpqApi = this.opqApi;
+                }
+                catch (Exception e)
+                {
+                    this.logger.LogError("Message parse failed : {error}", e);
+                    return;
+                }
+
+                switch (msg)
+                {
+                    case TextMessage textMsg:
+                        this.msgHandler.OnFriendTextMsgRecieved(textMsg);
                         break;
-                    case "PicMsg":
-                        var picMsg = respData.CurrentPacket?.Data?.ParseContent<FriendMixtureContent>();
+                    case PictureMessage picMsg:
+                        this.msgHandler.OnFriendPictureMsgRecieved(picMsg);
                         break;
-                    case "TempSessionMsg":
-                        var tempSessionMsg = respData.CurrentPacket?.Data?.ParseContent<FriendMixtureContent>();
+                    default:
+                        this.logger.LogWarning("Unresolved message object Type {type}", msg.GetType());
                         break;
                 }
             });
