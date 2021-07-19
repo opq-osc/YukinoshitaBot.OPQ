@@ -52,7 +52,7 @@ namespace YukinoshitaBot.Extensions
             {
                 if (type.GetCustomAttribute<YukinoshitaControllerAttribute>() is YukinoshitaControllerAttribute attribute)
                 {
-                    services.AddSingleton(type);
+                    services.AddScoped(type);
                     controllerTypes.Add(new (type, attribute));
                 }
             }

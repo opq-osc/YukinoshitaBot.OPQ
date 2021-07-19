@@ -58,6 +58,8 @@ namespace YukinoshitaBot
             .ConfigureServices((context, services) =>
             {
                 services.AddYukinoshitaBot();
+                services.AddScoped<BksJwcSpider>();
+                services.AddScoped<BksJwcParser>();
             })
             .UseSerilog();
     }

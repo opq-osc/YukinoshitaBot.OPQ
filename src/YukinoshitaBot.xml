@@ -4,6 +4,33 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
+        <member name="T:YukinoshitaBot.Controllers.CourseController">
+            <summary>
+            测试控制器
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Controllers.CourseController.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Controllers.RepeaterController},YukinoshitaBot.Services.BksJwcParser,YukinoshitaBot.Services.BksJwcSpider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Controllers.CourseController"/> class.
+            </summary>
+            <param name="logger">logger</param>
+            <param name="bksJwcParser">parser</param>
+            <param name="bksJwcSpider">spider</param>
+        </member>
+        <member name="M:YukinoshitaBot.Controllers.CourseController.JwcLoginAsync(YukinoshitaBot.Data.Event.Message)">
+            <summary>
+            教务处登录测试
+            </summary>
+            <param name="message">消息</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Controllers.CourseController.GetCourseAsync(YukinoshitaBot.Data.Event.Message)">
+            <summary>
+            课程爬取测试
+            </summary>
+            <param name="message">消息</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
+        </member>
         <member name="T:YukinoshitaBot.Controllers.RepeaterController">
             <summary>
             测试控制器
@@ -632,6 +659,56 @@
             数据包
             </summary>
         </member>
+        <member name="T:YukinoshitaBot.Data.Whut.Course">
+            <summary>
+            课程数据
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Whut.Course.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Whut.Course"/> class.
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.Name">
+            <summary>
+            课程名
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.Teacher">
+            <summary>
+            授课教师
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.Room">
+            <summary>
+            上课地点
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.WeekStart">
+            <summary>
+            开始周
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.WeekEnd">
+            <summary>
+            结束周
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.SectionStart">
+            <summary>
+            开始节
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.SectionEnd">
+            <summary>
+            结束节
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Whut.Course.WeekDay">
+            <summary>
+            星期(1-7)
+            </summary>
+        </member>
         <member name="T:YukinoshitaBot.Extensions.HttpRequestMessageExtension">
             <summary>
             <see cref="T:System.Net.Http.HttpRequestMessage"/>的拓展
@@ -683,6 +760,66 @@
             </summary>
             <param name="args">控制台参数</param>
             <returns><see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>的实例</returns>
+        </member>
+        <member name="T:YukinoshitaBot.Services.BksJwcParser">
+            <summary>
+            本科生教务数据解析
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcParser.ParseCourses(System.String)">
+            <summary>
+            解析课程数据
+            </summary>
+            <param name="page">个人课表页</param>
+            <returns>课程数据</returns>
+        </member>
+        <member name="T:YukinoshitaBot.Services.BksJwcSpider">
+            <summary>
+            本科生教务处爬虫
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcSpider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.BksJwcSpider"/> class.
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcSpider.LoginAsync(System.String,System.String)">
+            <summary>
+            登录教务处
+            </summary>
+            <param name="sno">学号</param>
+            <param name="password">密码</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcSpider.GetIndexPageAsync">
+            <summary>
+            爬取教务处主页
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcSpider.NavigateToEotPageAsync">
+            <summary>
+            导航到评教系统
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcSpider.NavigateToCoursePageAsync">
+            <summary>
+            导航到选课系统
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcSpider.GetCoursesAsync">
+            <summary>
+            爬取选课系统个人课表
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
+        </member>
+        <member name="M:YukinoshitaBot.Services.BksJwcSpider.GetEotInfoAsync">
+            <summary>
+            爬取评教信息
+            </summary>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
         </member>
         <member name="T:YukinoshitaBot.Services.IMessageHandler">
             <summary>
