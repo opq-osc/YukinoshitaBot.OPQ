@@ -32,14 +32,6 @@ namespace YukinoshitaBot.Services
             this.controllers = new Dictionary<object, YukinoshitaControllerAttribute>();
         }
 
-        private static bool CheckMatch(string msg, string cmd, CommandMatchMethod method) => method switch
-        {
-            CommandMatchMethod.Strict => msg == cmd,
-            CommandMatchMethod.StartWith => msg.StartsWith(cmd),
-            CommandMatchMethod.Regex => Regex.IsMatch(msg, cmd),
-            _ => false
-        };
-
         /// <summary>
         /// 解析消息处理器
         /// </summary>
@@ -196,5 +188,13 @@ namespace YukinoshitaBot.Services
                 }
             }
         }
+
+        private static bool CheckMatch(string msg, string cmd, CommandMatchMethod method) => method switch
+        {
+            CommandMatchMethod.Strict => msg == cmd,
+            CommandMatchMethod.StartWith => msg.StartsWith(cmd),
+            CommandMatchMethod.Regex => Regex.IsMatch(msg, cmd),
+            _ => false
+        };
     }
 }

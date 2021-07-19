@@ -11,6 +11,7 @@ namespace YukinoshitaBot.Services
     /// <summary>
     /// 复读机
     /// </summary>
+    [Obsolete]
     public class Repeater : IMessageHandler
     {
         /// <inheritdoc/>
