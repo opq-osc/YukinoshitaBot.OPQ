@@ -543,6 +543,19 @@
             <param name="httpClient">使用该<see cref="T:System.Net.Http.HttpClient"/>发送</param>
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
         </member>
+        <member name="T:YukinoshitaBot.Extensions.ServiceCollectionExtension">
+            <summary>
+            依赖注入拓展
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Extensions.ServiceCollectionExtension.AddYukinoshitaBot``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            添加YukinoshitaBot服务
+            </summary>
+            <typeparam name="MessageHandlerType">要使用的消息处理器类型</typeparam>
+            <param name="services">服务容器</param>
+            <returns>链式调用服务容器</returns>
+        </member>
         <member name="T:YukinoshitaBot.Program">
             <summary>
             This is the main class of the application.

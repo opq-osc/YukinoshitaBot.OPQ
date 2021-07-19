@@ -9,6 +9,7 @@ namespace YukinoshitaBot
     using Microsoft.Extensions.Hosting;
     using Serilog;
     using Serilog.Events;
+    using YukinoshitaBot.Extensions;
     using YukinoshitaBot.Services;
 
     // TODO 图片消息处理 消息回复 事件系统
@@ -55,10 +56,7 @@ namespace YukinoshitaBot
             })
             .ConfigureServices((context, services) =>
             {
-                services.AddSingleton<OpqApi>();
-                services.AddHostedService<MessageQueueScanner>();
-                services.AddScoped<IMessageHandler, Repeater>();
-                services.AddHostedService<MainWorker>();
+                services.AddYukinoshitaBot<Repeater>();
             })
             .UseSerilog();
     }
