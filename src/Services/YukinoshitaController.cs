@@ -10,6 +10,7 @@ namespace YukinoshitaBot.Services
     using System.Linq;
     using System.Reflection;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using YukinoshitaBot.Data.Attributes;
     using YukinoshitaBot.Data.Event;
@@ -30,6 +31,14 @@ namespace YukinoshitaBot.Services
         {
             this.controllers = new Dictionary<object, YukinoshitaControllerAttribute>();
         }
+
+        private static bool CheckMatch(string msg, string cmd, CommandMatchMethod method) => method switch
+        {
+            CommandMatchMethod.Strict => msg == cmd,
+            CommandMatchMethod.StartWith => msg.StartsWith(cmd),
+            CommandMatchMethod.Regex => Regex.IsMatch(msg, cmd),
+            _ => false
+        };
 
         /// <summary>
         /// 解析消息处理器
@@ -79,25 +88,113 @@ namespace YukinoshitaBot.Services
         /// <inheritdoc/>
         public void OnFriendPictureMsgRecieved(PictureMessage msg)
         {
-            throw new NotImplementedException();
+            if (this.controllerInfo is not null && this.controllerMethods is not null)
+            {
+                foreach (var controller in this.controllerInfo)
+                {
+                    foreach (var method in this.controllerMethods[controller.Item1])
+                    {
+                        var isMatch = CheckMatch(msg.Content, method.Item2.Command, method.Item2.MatchMethod);
+                        if (isMatch)
+                        {
+                            method.Item1.Invoke(controller.Item2, new object[] { msg });
+                            if (method.Item2.Mode == HandleMode.Break)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    if (controller.Item3.Mode == HandleMode.Break)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         /// <inheritdoc/>
         public void OnFriendTextMsgRecieved(TextMessage msg)
         {
-            throw new NotImplementedException();
+            if (this.controllerInfo is not null && this.controllerMethods is not null)
+            {
+                foreach (var controller in this.controllerInfo)
+                {
+                    foreach (var method in this.controllerMethods[controller.Item1])
+                    {
+                        var isMatch = CheckMatch(msg.Content, method.Item2.Command, method.Item2.MatchMethod);
+                        if (isMatch)
+                        {
+                            method.Item1.Invoke(controller.Item2, new object[] { msg });
+                            if (method.Item2.Mode == HandleMode.Break)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    if (controller.Item3.Mode == HandleMode.Break)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         /// <inheritdoc/>
         public void OnGroupPictureMsgRecieved(PictureMessage msg)
         {
-            throw new NotImplementedException();
+            if (this.controllerInfo is not null && this.controllerMethods is not null)
+            {
+                foreach (var controller in this.controllerInfo)
+                {
+                    foreach (var method in this.controllerMethods[controller.Item1])
+                    {
+                        var isMatch = CheckMatch(msg.Content, method.Item2.Command, method.Item2.MatchMethod);
+                        if (isMatch)
+                        {
+                            method.Item1.Invoke(controller.Item2, new object[] { msg });
+                            if (method.Item2.Mode == HandleMode.Break)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    if (controller.Item3.Mode == HandleMode.Break)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         /// <inheritdoc/>
         public void OnGroupTextMsgRecieved(TextMessage msg)
         {
-            throw new NotImplementedException();
+            if (this.controllerInfo is not null && this.controllerMethods is not null)
+            {
+                foreach (var controller in this.controllerInfo)
+                {
+                    foreach (var method in this.controllerMethods[controller.Item1])
+                    {
+                        var isMatch = CheckMatch(msg.Content, method.Item2.Command, method.Item2.MatchMethod);
+                        if (isMatch)
+                        {
+                            method.Item1.Invoke(controller.Item2, new object[] { msg });
+                            if (method.Item2.Mode == HandleMode.Break)
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    if (controller.Item3.Mode == HandleMode.Break)
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }

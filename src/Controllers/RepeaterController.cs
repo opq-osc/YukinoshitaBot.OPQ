@@ -35,7 +35,7 @@ namespace YukinoshitaBot.Controllers
         /// 文本消息复读
         /// </summary>
         /// <param name="message">消息</param>
-        [YukinoshitaHandler(Command = "read ", MatchMethod = CommandMatchMethod.StartWith, Mode = HandleMode.Break, Priority = 1)]
+        [YukinoshitaHandler(Command = "read ", MatchMethod = CommandMatchMethod.StartWith, Mode = HandleMode.Break, Priority = 2)]
         public void TextRepeater(Message message)
         {
             if (message is TextMessage textMsg)
@@ -49,7 +49,7 @@ namespace YukinoshitaBot.Controllers
         /// 图片消息复读
         /// </summary>
         /// <param name="message">消息</param>
-        [YukinoshitaHandler(Command = "read", MatchMethod = CommandMatchMethod.StartWith, Mode = HandleMode.Break, Priority = 2)]
+        [YukinoshitaHandler(Command = "read", MatchMethod = CommandMatchMethod.StartWith, Mode = HandleMode.Pass, Priority = 1)]
         public void PictureRepeater(Message message)
         {
             if (message is PictureMessage picMsg)
