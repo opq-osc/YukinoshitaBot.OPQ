@@ -16,5 +16,14 @@ namespace YukinoshitaBot.Data.Attributes
     [AttributeUsage(AttributeTargets.Class)]
     public class YukinoshitaControllerAttribute : Attribute
     {
+        /// <summary>
+        /// 优先级，越小优先级越高
+        /// </summary>
+        public int Priority { get; set; }
+
+        /// <summary>
+        /// 处理模式
+        /// </summary>
+        public HandleMode Mode { get; set; }
     }
 }

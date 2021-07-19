@@ -4,19 +4,113 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
-        <member name="T:YukinoshitaBot.Controllers.TestController1">
+        <member name="T:YukinoshitaBot.Controllers.RepeaterController">
             <summary>
-            测试用Controller
+            测试控制器
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.Controllers.TestController2">
+        <member name="M:YukinoshitaBot.Controllers.RepeaterController.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Controllers.RepeaterController})">
             <summary>
-            测试用Controller
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Controllers.RepeaterController"/> class.
+            </summary>
+            <param name="logger">logger</param>
+        </member>
+        <member name="M:YukinoshitaBot.Controllers.RepeaterController.TextRepeater(YukinoshitaBot.Data.Event.Message)">
+            <summary>
+            文本消息复读
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="M:YukinoshitaBot.Controllers.RepeaterController.PictureRepeater(YukinoshitaBot.Data.Event.Message)">
+            <summary>
+            图片消息复读
+            </summary>
+            <param name="message">消息</param>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.CommandMatchMethod">
+            <summary>
+            指令识别方式
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.CommandMatchMethod.StartWith">
+            <summary>
+            开头识别
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.CommandMatchMethod.Strict">
+            <summary>
+            严格一致
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.CommandMatchMethod.Regex">
+            <summary>
+            正则匹配
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.HandleMode">
+            <summary>
+            处理方式
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.HandleMode.Break">
+            <summary>
+            本方法处理完毕后中断处理链
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.HandleMode.Pass">
+            <summary>
+            本方法处理完毕后继续将请求向之后的处理者传递
             </summary>
         </member>
         <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute">
             <summary>
             定义为YukinoshitaController
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute.Priority">
+            <summary>
+            优先级，越小优先级越高
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute.Mode">
+            <summary>
+            处理模式
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute">
+            <summary>
+            定义为Yukinoshita消息处理方法
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute"/> class.
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute"/> class.
+            </summary>
+            <param name="command">要匹配的指令</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.MatchMethod">
+            <summary>
+            指令识别方式
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.Command">
+            <summary>
+            匹配的指令
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.Priority">
+            <summary>
+            优先级，越小优先级越高
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.Mode">
+            <summary>
+            处理模式
             </summary>
         </member>
         <member name="T:YukinoshitaBot.Data.Content.FriendMixtureContent">
@@ -688,11 +782,17 @@
             Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.YukinoshitaController"/> class.
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.Services.YukinoshitaController.AddController(System.Object)">
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.ResolveHandlers">
+            <summary>
+            解析消息处理器
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.AddController(System.Object,YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute)">
             <summary>
             添加控制器
             </summary>
             <param name="controller">要添加的控制器</param>
+            <param name="controllerInfo">控制器Attribute信息</param>
         </member>
         <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnFriendPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
             <inheritdoc/>

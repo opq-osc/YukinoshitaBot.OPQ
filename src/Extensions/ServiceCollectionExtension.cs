@@ -47,13 +47,13 @@ namespace YukinoshitaBot.Extensions
 
             // 扫描当前程序集，添加所有带有YukinoshitaControllerAttribute的服务作为控制器
             var ass = Assembly.GetExecutingAssembly();
-            var controllerTypes = new List<Type>();
+            var controllerTypes = new List<Tuple<Type, YukinoshitaControllerAttribute>>();
             foreach (var type in ass.GetTypes())
             {
-                if (type.GetCustomAttribute<YukinoshitaControllerAttribute>() is not null)
+                if (type.GetCustomAttribute<YukinoshitaControllerAttribute>() is YukinoshitaControllerAttribute attribute)
                 {
                     services.AddSingleton(type);
-                    controllerTypes.Add(type);
+                    controllerTypes.Add(new (type, attribute));
                 }
             }
 
@@ -64,12 +64,14 @@ namespace YukinoshitaBot.Extensions
                 // 将以注入的Controller添加进ControllerService
                 foreach (var type in controllerTypes)
                 {
-                    if (services.GetService(type) is object controller)
+                    if (services.GetService(type.Item1) is object controller)
                     {
-                        controllerCollection.AddController(controller);
+                        controllerCollection.AddController(controller, type.Item2);
                     }
                 }
 
+                // 在添加控制器后进行调用链的解析
+                controllerCollection.ResolveHandlers();
                 return controllerCollection;
             });
 
