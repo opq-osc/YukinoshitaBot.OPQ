@@ -27,6 +27,8 @@ namespace YukinoshitaBot.Controllers
         private readonly BksJwcSpider bksJwcSpider;
         private readonly BksJwcParser bksJwcParser;
 
+        private List<Course> courses;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CourseController"/> class.
         /// </summary>
@@ -38,6 +40,7 @@ namespace YukinoshitaBot.Controllers
             this.logger = logger;
             this.bksJwcSpider = bksJwcSpider;
             this.bksJwcParser = bksJwcParser;
+            this.courses = new List<Course>();
         }
 
         /// <summary>
@@ -75,22 +78,29 @@ namespace YukinoshitaBot.Controllers
         {
             if (message is TextMessage)
             {
-                await this.bksJwcSpider.NavigateToCoursePageAsync();
-                var coursePage = await this.bksJwcSpider.GetCoursesAsync().ConfigureAwait(false);
-
-                if (coursePage is null)
+                if (!this.courses.Any())
                 {
-                    message.Reply(new TextMessageRequest($"spider failed."));
-                    return;
+                    await this.bksJwcSpider.NavigateToCoursePageAsync();
+                    var coursePage = await this.bksJwcSpider.GetCoursesAsync().ConfigureAwait(false);
+
+                    if (coursePage is null)
+                    {
+                        message.Reply(new TextMessageRequest($"spider failed."));
+                        return;
+                    }
+
+                    var courses = this.bksJwcParser.ParseCourses(coursePage);
+
+                    this.courses.AddRange(courses);
                 }
 
-                var courses = this.bksJwcParser.ParseCourses(coursePage);
-
-                message.Reply(courses switch
+                var sb = new StringBuilder();
+                foreach (var course in this.courses)
                 {
-                    IEnumerable<Course> c => new TextMessageRequest($"course count: {c.Count()}"),
-                    null => new TextMessageRequest("network error.")
-                });
+                    sb.Append(course).Append(Environment.NewLine);
+                }
+
+                message.Reply(new TextMessageRequest(sb.ToString()));
             }
         }
     }

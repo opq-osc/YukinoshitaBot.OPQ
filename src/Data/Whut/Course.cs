@@ -64,5 +64,11 @@ namespace YukinoshitaBot.Data.Whut
         /// 星期(1-7)
         /// </summary>
         public int WeekDay { get; set; }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{this.Name}@{this.Room},{this.Teacher},{this.WeekDay},{this.WeekStart}-{this.WeekEnd}周,{this.SectionStart}-{this.SectionEnd}节";
+        }
     }
 }
