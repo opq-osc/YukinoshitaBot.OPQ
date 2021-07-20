@@ -12,10 +12,11 @@
 		<Authors>Zhuoqiang.Li</Authors>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Description>A .Net sdk for OPQ bot.</Description>
+		<Description>基于OPQ的QQ机器人开发框架，支持依赖注入，快速搭建业务</Description>
 		<PackageId>YukinoshitaBot.OPQ</PackageId>
 		<PackageProjectUrl>https://github.com/AZ0133/YukinoshitaBot.OPQ</PackageProjectUrl>
-		<Version>0.1.0</Version>
+		<Version>0.1.1</Version>
+		<RepositoryUrl>https://github.com/AZ0133/YukinoshitaBot.OPQ</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
