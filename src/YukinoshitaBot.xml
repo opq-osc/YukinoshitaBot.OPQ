@@ -54,6 +54,12 @@
             </summary>
             <param name="message">消息</param>
         </member>
+        <member name="M:YukinoshitaBot.Controllers.RepeaterController.Hello(YukinoshitaBot.Data.Event.Message)">
+            <summary>
+            测试
+            </summary>
+            <param name="message">消息</param>
+        </member>
         <member name="T:YukinoshitaBot.Data.Attributes.CommandMatchMethod">
             <summary>
             指令识别方式
@@ -781,6 +787,9 @@
             <summary>
             星期(1-7)
             </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Whut.Course.ToString">
+            <inheritdoc/>
         </member>
         <member name="T:YukinoshitaBot.Extensions.HttpRequestMessageExtension">
             <summary>

@@ -58,5 +58,18 @@ namespace YukinoshitaBot.Controllers
                 message.Reply(new PictureMessageRequest(new Uri(picMsg.FirstPicture)));
             }
         }
+
+        /// <summary>
+        /// 测试
+        /// </summary>
+        /// <param name="message">消息</param>
+        [YukinoshitaHandler(Command = "老婆", MatchMethod = CommandMatchMethod.StartWith, Mode = HandleMode.Pass, Priority = 3)]
+        public void Hello(Message message)
+        {
+            if (message is TextMessage textMessage)
+            {
+                message.Reply(new TextMessageRequest("真是不知廉耻的家伙"));
+            }
+        }
     }
 }
