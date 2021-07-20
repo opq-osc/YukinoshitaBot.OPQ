@@ -44,7 +44,7 @@ namespace YukinoshitaBot.Extensions
             services.AddMemoryCache();
 
             // 扫描当前程序集，添加所有带有YukinoshitaControllerAttribute的服务作为控制器
-            var ass = Assembly.GetExecutingAssembly();
+            var ass = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
             var controllerTypes = new List<Type>();
             foreach (var type in ass.GetTypes())
             {
@@ -69,7 +69,7 @@ namespace YukinoshitaBot.Extensions
                 return controllerCollection;
             });
 
-            services.AddScoped<IMessageHandler, YukinoshitaController>();
+            services.AddSingleton<IMessageHandler, YukinoshitaController>();
 
             services.AddHostedService<MessageQueueScanner>();
             services.AddHostedService<YukinoshitaWorker>();
