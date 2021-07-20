@@ -14,6 +14,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>A .Net sdk for OPQ bot.</Description>
 		<PackageId>YukinoshitaBot.OPQ</PackageId>
+		<PackageProjectUrl>https://github.com/AZ0133/YukinoshitaBot.OPQ</PackageProjectUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
