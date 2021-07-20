@@ -15,7 +15,7 @@ namespace YukinoshitaBot.Services
     /// <summary>
     /// 控制器容器
     /// </summary>
-    public class ControllerCollection
+    internal class ControllerCollection
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControllerCollection"/> class.

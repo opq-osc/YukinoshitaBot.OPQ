@@ -8,6 +8,7 @@ namespace YukinoshitaBot.Data.Event
     using System.Linq;
     using YukinoshitaBot.Data.Content;
     using YukinoshitaBot.Data.OpqApi;
+    using YukinoshitaBot.Data.WebSocket;
     using YukinoshitaBot.Services;
 
     /// <summary>

@@ -44,7 +44,7 @@ namespace YukinoshitaBot.Services
         {
             this.logger.LogInformation("Message queue scanner starting...");
 
-            var botConfig = this.configuration.GetSection("MeowBotSettings");
+            var botConfig = this.configuration.GetSection("OpqApiSettings");
             var httpApi = botConfig.GetValue<string>("HttpApi");
 
             this.httpClient.BaseAddress = new Uri(httpApi);

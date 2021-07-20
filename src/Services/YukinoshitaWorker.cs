@@ -1,4 +1,4 @@
-﻿// <copyright file="MainWorker.cs" company="PlaceholderCompany">
+﻿// <copyright file="YukinoshitaWorker.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -15,13 +15,14 @@ namespace YukinoshitaBot
     using YukinoshitaBot.Data.Content;
     using YukinoshitaBot.Data.Event;
     using YukinoshitaBot.Data.OpqApi;
+    using YukinoshitaBot.Data.WebSocket;
     using YukinoshitaBot.Extensions;
     using YukinoshitaBot.Services;
 
     /// <summary>
     /// 工作线程
     /// </summary>
-    public class MainWorker : BackgroundService
+    public class YukinoshitaWorker : BackgroundService
     {
         private readonly ILogger logger;
         private readonly IConfiguration configuration;
@@ -29,13 +30,13 @@ namespace YukinoshitaBot
         private readonly IMessageHandler msgHandler;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MainWorker"/> class.
+        /// Initializes a new instance of the <see cref="YukinoshitaWorker"/> class.
         /// </summary>
         /// <param name="logger">logger</param>
         /// <param name="configuration">config</param>
         /// <param name="opqApi">opqApi</param>
         /// <param name="msgHandler">message handler</param>
-        public MainWorker(ILogger<MainWorker> logger, IConfiguration configuration, OpqApi opqApi, IMessageHandler msgHandler)
+        public YukinoshitaWorker(ILogger<YukinoshitaWorker> logger, IConfiguration configuration, OpqApi opqApi, IMessageHandler msgHandler)
         {
             this.logger = logger;
             this.configuration = configuration;
@@ -46,7 +47,7 @@ namespace YukinoshitaBot
         /// <inheritdoc/>
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            var botConfig = this.configuration.GetSection("MeowBotSettings");
+            var botConfig = this.configuration.GetSection("OpqApiSettings");
             var httpApi = botConfig.GetValue<string>("HttpApi");
             var loginQQ = botConfig.GetValue<long>("LoginQQ");
             var wsApi = botConfig.GetValue<string>("WebSocketApi");

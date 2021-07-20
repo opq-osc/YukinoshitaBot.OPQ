@@ -4,62 +4,6 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
-        <member name="T:YukinoshitaBot.Controllers.CourseController">
-            <summary>
-            测试控制器
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Controllers.CourseController.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Controllers.RepeaterController},YukinoshitaBot.Services.BksJwcParser,YukinoshitaBot.Services.BksJwcSpider)">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Controllers.CourseController"/> class.
-            </summary>
-            <param name="logger">logger</param>
-            <param name="bksJwcParser">parser</param>
-            <param name="bksJwcSpider">spider</param>
-        </member>
-        <member name="M:YukinoshitaBot.Controllers.CourseController.JwcLoginAsync(YukinoshitaBot.Data.Event.Message)">
-            <summary>
-            教务处登录测试
-            </summary>
-            <param name="message">消息</param>
-            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
-        </member>
-        <member name="M:YukinoshitaBot.Controllers.CourseController.GetCourseAsync(YukinoshitaBot.Data.Event.Message)">
-            <summary>
-            课程爬取测试
-            </summary>
-            <param name="message">消息</param>
-            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
-        </member>
-        <member name="T:YukinoshitaBot.Controllers.RepeaterController">
-            <summary>
-            测试控制器
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Controllers.RepeaterController.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Controllers.RepeaterController})">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Controllers.RepeaterController"/> class.
-            </summary>
-            <param name="logger">logger</param>
-        </member>
-        <member name="M:YukinoshitaBot.Controllers.RepeaterController.TextRepeater(YukinoshitaBot.Data.Event.Message)">
-            <summary>
-            文本消息复读
-            </summary>
-            <param name="message">消息</param>
-        </member>
-        <member name="M:YukinoshitaBot.Controllers.RepeaterController.PictureRepeater(YukinoshitaBot.Data.Event.Message)">
-            <summary>
-            图片消息复读
-            </summary>
-            <param name="message">消息</param>
-        </member>
-        <member name="M:YukinoshitaBot.Controllers.RepeaterController.Hello(YukinoshitaBot.Data.Event.Message)">
-            <summary>
-            测试
-            </summary>
-            <param name="message">消息</param>
-        </member>
         <member name="T:YukinoshitaBot.Data.Attributes.CommandMatchMethod">
             <summary>
             指令识别方式
@@ -315,18 +259,18 @@
             OpqApi
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.Data.Event.Message.Parse(YukinoshitaBot.Data.GroupMessage)">
+        <member name="M:YukinoshitaBot.Data.Event.Message.Parse(YukinoshitaBot.Data.WebSocket.GroupMessage)">
             <summary>
-            从<see cref="T:YukinoshitaBot.Data.GroupMessage"/>创建Message
+            从<see cref="T:YukinoshitaBot.Data.WebSocket.GroupMessage"/>创建Message
             </summary>
             <param name="rawMessage">原始消息</param>
             <exception cref="T:System.ArgumentException">ArgumentException</exception>
             <exception cref="T:System.NotImplementedException">NotImplementedException</exception>
             <returns><see cref="T:YukinoshitaBot.Data.Event.Message"/>的子类</returns>
         </member>
-        <member name="M:YukinoshitaBot.Data.Event.Message.Parse(YukinoshitaBot.Data.FriendMessage)">
+        <member name="M:YukinoshitaBot.Data.Event.Message.Parse(YukinoshitaBot.Data.WebSocket.FriendMessage)">
             <summary>
-            从<see cref="T:YukinoshitaBot.Data.FriendMessage"/>创建Message
+            从<see cref="T:YukinoshitaBot.Data.WebSocket.FriendMessage"/>创建Message
             </summary>
             <param name="rawMessage">原始消息</param>
             <exception cref="T:System.ArgumentException">ArgumentException</exception>
@@ -447,103 +391,6 @@
             <summary>
             文本消息
             </summary>
-        </member>
-        <member name="T:YukinoshitaBot.Data.FriendMessage">
-            <summary>
-            好友消息
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.FriendMessage.FromUin">
-            <summary>
-            发送者QQ号
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.FriendMessage.ToUin">
-            <summary>
-            接收者QQ号
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.FriendMessage.MsgSeq">
-            <summary>
-            消息序列
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.FriendMessage.GroupID">
-            <summary>
-            发送者所在群的群号，仅<see cref="P:YukinoshitaBot.Data.MessageBase.MsgType"/>为TempSessionMsg时有效
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.FriendMessage.RedBaginfo">
-            <summary>
-            红包信息
-            </summary>
-        </member>
-        <member name="T:YukinoshitaBot.Data.GroupMessage">
-            <summary>
-            群消息
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.FromGroupId">
-            <summary>
-            消息来源群号
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.FromGroupName">
-            <summary>
-            消息来源群名称
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.FromUserId">
-            <summary>
-            消息来源用户QQ号
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.FromNickName">
-            <summary>
-            消息来源用户群昵称
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.MsgTime">
-            <summary>
-            消息时间(10位时间戳)
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.MsgSeq">
-            <summary>
-            消息序列号
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.MsgRandom">
-            <summary>
-            消息随机数
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.GroupMessage.RedBaginfo">
-            <summary>
-            红包信息
-            </summary>
-        </member>
-        <member name="T:YukinoshitaBot.Data.MessageBase">
-            <summary>
-            消息基类，提供消息解析功能
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.MessageBase.Content">
-            <summary>
-            消息内容
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.MessageBase.MsgType">
-            <summary>
-            消息类型
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.MessageBase.ParseContent``1">
-            <summary>
-            解析Json格式的消息内容
-            </summary>
-            <typeparam name="T">目标类型</typeparam>
-            <returns>解析后类型的实例</returns>
         </member>
         <member name="T:YukinoshitaBot.Data.OpqApi.MessageRequestBase">
             <summary>
@@ -681,115 +528,159 @@
         <member name="M:YukinoshitaBot.Data.OpqApi.TextMessageRequest.SendToGroupMember(System.Int64,System.Int64)">
             <inheritdoc/>
         </member>
-        <member name="T:YukinoshitaBot.Data.PictureInfo">
+        <member name="T:YukinoshitaBot.Data.WebSocket.FriendMessage">
+            <summary>
+            好友消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.FriendMessage.FromUin">
+            <summary>
+            发送者QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.FriendMessage.ToUin">
+            <summary>
+            接收者QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.FriendMessage.MsgSeq">
+            <summary>
+            消息序列
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.FriendMessage.GroupID">
+            <summary>
+            发送者所在群的群号，仅<see cref="P:YukinoshitaBot.Data.WebSocket.MessageBase.MsgType"/>为TempSessionMsg时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.FriendMessage.RedBaginfo">
+            <summary>
+            红包信息
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.WebSocket.GroupMessage">
+            <summary>
+            群消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.FromGroupId">
+            <summary>
+            消息来源群号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.FromGroupName">
+            <summary>
+            消息来源群名称
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.FromUserId">
+            <summary>
+            消息来源用户QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.FromNickName">
+            <summary>
+            消息来源用户群昵称
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.MsgTime">
+            <summary>
+            消息时间(10位时间戳)
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.MsgSeq">
+            <summary>
+            消息序列号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.MsgRandom">
+            <summary>
+            消息随机数
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.GroupMessage.RedBaginfo">
+            <summary>
+            红包信息
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.WebSocket.MessageBase">
+            <summary>
+            消息基类，提供消息解析功能
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.MessageBase.Content">
+            <summary>
+            消息内容
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.WebSocket.MessageBase.MsgType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.WebSocket.MessageBase.ParseContent``1">
+            <summary>
+            解析Json格式的消息内容
+            </summary>
+            <typeparam name="T">目标类型</typeparam>
+            <returns>解析后类型的实例</returns>
+        </member>
+        <member name="T:YukinoshitaBot.Data.WebSocket.PictureInfo">
             <summary>
             图片信息
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.PictureInfo.FileId">
+        <member name="P:YukinoshitaBot.Data.WebSocket.PictureInfo.FileId">
             <summary>
             文件序号
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.PictureInfo.FileMD5">
+        <member name="P:YukinoshitaBot.Data.WebSocket.PictureInfo.FileMD5">
             <summary>
             文件MD5
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.PictureInfo.FileSize">
+        <member name="P:YukinoshitaBot.Data.WebSocket.PictureInfo.FileSize">
             <summary>
             文件大小
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.PictureInfo.Url">
+        <member name="P:YukinoshitaBot.Data.WebSocket.PictureInfo.Url">
             <summary>
             文件URL
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.Data.SocketPacket`1">
+        <member name="T:YukinoshitaBot.Data.WebSocket.SocketPacket`1">
             <summary>
             SocketIO数据包格式
             </summary>
             <typeparam name="T">消息类型</typeparam>
         </member>
-        <member name="P:YukinoshitaBot.Data.SocketPacket`1.WebConnId">
+        <member name="P:YukinoshitaBot.Data.WebSocket.SocketPacket`1.WebConnId">
             <summary>
             连接ID
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.SocketPacket`1.Data">
+        <member name="P:YukinoshitaBot.Data.WebSocket.SocketPacket`1.Data">
             <summary>
             消息体
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.Data.SocketResponse`1">
+        <member name="T:YukinoshitaBot.Data.WebSocket.SocketResponse`1">
             <summary>
             SocketIO数据返回类型
             </summary>
             <typeparam name="T">消息类型</typeparam>
         </member>
-        <member name="P:YukinoshitaBot.Data.SocketResponse`1.CurrentQQ">
+        <member name="P:YukinoshitaBot.Data.WebSocket.SocketResponse`1.CurrentQQ">
             <summary>
             绑定到Socket的QQ号
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.SocketResponse`1.CurrentPacket">
+        <member name="P:YukinoshitaBot.Data.WebSocket.SocketResponse`1.CurrentPacket">
             <summary>
             数据包
             </summary>
-        </member>
-        <member name="T:YukinoshitaBot.Data.Whut.Course">
-            <summary>
-            课程数据
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.Whut.Course.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Whut.Course"/> class.
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.Name">
-            <summary>
-            课程名
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.Teacher">
-            <summary>
-            授课教师
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.Room">
-            <summary>
-            上课地点
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.WeekStart">
-            <summary>
-            开始周
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.WeekEnd">
-            <summary>
-            结束周
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.SectionStart">
-            <summary>
-            开始节
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.SectionEnd">
-            <summary>
-            结束节
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Whut.Course.WeekDay">
-            <summary>
-            星期(1-7)
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.Whut.Course.ToString">
-            <inheritdoc/>
         </member>
         <member name="T:YukinoshitaBot.Extensions.HttpRequestMessageExtension">
             <summary>
@@ -830,78 +721,6 @@
             </summary>
             <param name="services">服务容器</param>
             <returns>链式调用服务容器</returns>
-        </member>
-        <member name="T:YukinoshitaBot.Program">
-            <summary>
-            This is the main class of the application.
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Program.CreateBuilder(System.String[])">
-            <summary>
-            创建并配置HostBuilder
-            </summary>
-            <param name="args">控制台参数</param>
-            <returns><see cref="T:Microsoft.Extensions.Hosting.IHostBuilder"/>的实例</returns>
-        </member>
-        <member name="T:YukinoshitaBot.Services.BksJwcParser">
-            <summary>
-            本科生教务数据解析
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcParser.ParseCourses(System.String)">
-            <summary>
-            解析课程数据
-            </summary>
-            <param name="page">个人课表页</param>
-            <returns>课程数据</returns>
-        </member>
-        <member name="T:YukinoshitaBot.Services.BksJwcSpider">
-            <summary>
-            本科生教务处爬虫
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcSpider.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.BksJwcSpider"/> class.
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcSpider.LoginAsync(System.String,System.String)">
-            <summary>
-            登录教务处
-            </summary>
-            <param name="sno">学号</param>
-            <param name="password">密码</param>
-            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcSpider.GetIndexPageAsync">
-            <summary>
-            爬取教务处主页
-            </summary>
-            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcSpider.NavigateToEotPageAsync">
-            <summary>
-            导航到评教系统
-            </summary>
-            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcSpider.NavigateToCoursePageAsync">
-            <summary>
-            导航到选课系统
-            </summary>
-            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the result of the asynchronous operation.</returns>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcSpider.GetCoursesAsync">
-            <summary>
-            爬取选课系统个人课表
-            </summary>
-            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
-        </member>
-        <member name="M:YukinoshitaBot.Services.BksJwcSpider.GetEotInfoAsync">
-            <summary>
-            爬取评教信息
-            </summary>
-            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
         </member>
         <member name="T:YukinoshitaBot.Services.ControllerCollection">
             <summary>
@@ -979,7 +798,7 @@
         </member>
         <member name="T:YukinoshitaBot.Services.OpqApi">
             <summary>
-            OPQ机器人Http接口
+            OPQ机器人Http队列
             </summary>
         </member>
         <member name="M:YukinoshitaBot.Services.OpqApi.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Services.OpqApi},Microsoft.Extensions.Configuration.IConfiguration)">
@@ -999,23 +818,6 @@
             向队列中添加一个请求
             </summary>
             <param name="request">要添加的请求</param>
-        </member>
-        <member name="T:YukinoshitaBot.Services.Repeater">
-            <summary>
-            复读机
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Services.Repeater.OnFriendPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
-            <inheritdoc/>
-        </member>
-        <member name="M:YukinoshitaBot.Services.Repeater.OnFriendTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
-            <inheritdoc/>
-        </member>
-        <member name="M:YukinoshitaBot.Services.Repeater.OnGroupPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
-            <inheritdoc/>
-        </member>
-        <member name="M:YukinoshitaBot.Services.Repeater.OnGroupTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
-            <inheritdoc/>
         </member>
         <member name="T:YukinoshitaBot.Services.YukinoshitaController">
             <summary>
@@ -1043,24 +845,24 @@
         <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnGroupTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
             <inheritdoc/>
         </member>
-        <member name="T:YukinoshitaBot.MainWorker">
+        <member name="T:YukinoshitaBot.YukinoshitaWorker">
             <summary>
             工作线程
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.MainWorker},Microsoft.Extensions.Configuration.IConfiguration,YukinoshitaBot.Services.OpqApi,YukinoshitaBot.Services.IMessageHandler)">
+        <member name="M:YukinoshitaBot.YukinoshitaWorker.#ctor(Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.YukinoshitaWorker},Microsoft.Extensions.Configuration.IConfiguration,YukinoshitaBot.Services.OpqApi,YukinoshitaBot.Services.IMessageHandler)">
             <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.MainWorker"/> class.
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.YukinoshitaWorker"/> class.
             </summary>
             <param name="logger">logger</param>
             <param name="configuration">config</param>
             <param name="opqApi">opqApi</param>
             <param name="msgHandler">message handler</param>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.StartAsync(System.Threading.CancellationToken)">
+        <member name="M:YukinoshitaBot.YukinoshitaWorker.StartAsync(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
-        <member name="M:YukinoshitaBot.MainWorker.ExecuteAsync(System.Threading.CancellationToken)">
+        <member name="M:YukinoshitaBot.YukinoshitaWorker.ExecuteAsync(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
     </members>

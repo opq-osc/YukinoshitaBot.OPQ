@@ -28,7 +28,7 @@ namespace YukinoshitaBot.Extensions
             services.AddSingleton<OpqApi>();
             services.AddHostedService<MessageQueueScanner>();
             services.AddScoped<IMessageHandler, MessageHandlerType>();
-            services.AddHostedService<MainWorker>();
+            services.AddHostedService<YukinoshitaWorker>();
 
             return services;
         }
@@ -41,9 +41,7 @@ namespace YukinoshitaBot.Extensions
         public static IServiceCollection AddYukinoshitaBot(this IServiceCollection services)
         {
             services.AddSingleton<OpqApi>();
-            services.AddHostedService<MessageQueueScanner>();
-
-            services.AddHostedService<MainWorker>();
+            services.AddMemoryCache();
 
             // 扫描当前程序集，添加所有带有YukinoshitaControllerAttribute的服务作为控制器
             var ass = Assembly.GetExecutingAssembly();
@@ -72,6 +70,9 @@ namespace YukinoshitaBot.Extensions
             });
 
             services.AddScoped<IMessageHandler, YukinoshitaController>();
+
+            services.AddHostedService<MessageQueueScanner>();
+            services.AddHostedService<YukinoshitaWorker>();
 
             return services;
         }

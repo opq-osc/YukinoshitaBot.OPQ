@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace YukinoshitaBot.Data
+namespace YukinoshitaBot.Data.WebSocket
 {
     /// <summary>
     /// 好友消息

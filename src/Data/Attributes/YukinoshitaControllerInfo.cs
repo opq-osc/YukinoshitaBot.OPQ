@@ -14,7 +14,7 @@ namespace YukinoshitaBot.Data.Attributes
     /// <summary>
     /// 控制器信息
     /// </summary>
-    public struct YukinoshitaControllerInfo : IComparable<YukinoshitaControllerInfo>
+    internal struct YukinoshitaControllerInfo : IComparable<YukinoshitaControllerInfo>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="YukinoshitaControllerInfo"/> struct.

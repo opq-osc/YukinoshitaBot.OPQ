@@ -21,7 +21,7 @@ namespace YukinoshitaBot.Services
     /// <summary>
     /// 实现控制器
     /// </summary>
-    public class YukinoshitaController : IMessageHandler
+    internal class YukinoshitaController : IMessageHandler
     {
         private readonly IServiceProvider serviceProvider;
         private readonly ILogger logger;

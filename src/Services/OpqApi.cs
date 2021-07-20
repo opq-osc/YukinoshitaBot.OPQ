@@ -11,7 +11,7 @@ namespace YukinoshitaBot.Services
     using Microsoft.Extensions.Logging;
 
     /// <summary>
-    /// OPQ机器人Http接口
+    /// OPQ机器人Http队列
     /// </summary>
     public class OpqApi
     {
@@ -30,7 +30,7 @@ namespace YukinoshitaBot.Services
             this.configuration = configuration;
 
             // 读取必要配置
-            var botConfig = this.configuration.GetSection("MeowBotSettings");
+            var botConfig = this.configuration.GetSection("OpqApiSettings");
             this.loginQQ = botConfig.GetValue<long>("LoginQQ");
             var msgQueueConfig = this.configuration.GetSection("MsgQueueSettings");
             var queueCapacity = msgQueueConfig.GetValue<int>("Capacity");
