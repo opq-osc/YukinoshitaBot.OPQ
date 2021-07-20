@@ -10,7 +10,10 @@
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<Company>Token Team</Company>
 		<Authors>Zhuoqiang.Li</Authors>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Description>A .Net sdk for OPQ bot.</Description>
+		<PackageId>YukinoshitaBot.OPQ</PackageId>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
