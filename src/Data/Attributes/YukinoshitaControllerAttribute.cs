@@ -25,5 +25,10 @@ namespace YukinoshitaBot.Data.Attributes
         /// 处理模式
         /// </summary>
         public HandleMode Mode { get; set; }
+
+        /// <summary>
+        /// 会话类型
+        /// </summary>
+        public SessionType SessionType { get; set; } = SessionType.None;
     }
 }

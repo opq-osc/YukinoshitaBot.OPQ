@@ -20,7 +20,7 @@ namespace YukinoshitaBot.Controllers
     /// <summary>
     /// 测试控制器
     /// </summary>
-    [YukinoshitaController(Mode = HandleMode.Break, Priority = 0)]
+    [YukinoshitaController(Mode = HandleMode.Break, Priority = 0, SessionType = SessionType.Person)]
     public class CourseController
     {
         private readonly ILogger logger;
@@ -70,7 +70,7 @@ namespace YukinoshitaBot.Controllers
         /// </summary>
         /// <param name="message">消息</param>
         /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        [YukinoshitaHandler(Command = "jwcgetcourse", MatchMethod = CommandMatchMethod.StartWith, Mode = HandleMode.Break, Priority = 2)]
+        [YukinoshitaHandler(Command = "jwcgetcourse", MatchMethod = CommandMatchMethod.StartWith, Mode = HandleMode.Break, Priority = 3)]
         public async Task GetCourseAsync(Message message)
         {
             if (message is TextMessage)

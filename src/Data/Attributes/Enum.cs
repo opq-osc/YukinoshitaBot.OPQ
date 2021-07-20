@@ -46,4 +46,25 @@ namespace YukinoshitaBot.Data.Attributes
         /// </summary>
         Pass
     }
+
+    /// <summary>
+    /// 会话类型
+    /// </summary>
+    public enum SessionType
+    {
+        /// <summary>
+        /// 无会话状态
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// 总是按照按QQ号进行会话
+        /// </summary>
+        Person,
+
+        /// <summary>
+        /// 群消息按照群号进行会话
+        /// </summary>
+        Group
+    }
 }

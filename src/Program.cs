@@ -6,6 +6,7 @@ namespace YukinoshitaBot
 {
     using System;
     using System.Reflection;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Serilog;
@@ -58,8 +59,9 @@ namespace YukinoshitaBot
             .ConfigureServices((context, services) =>
             {
                 services.AddYukinoshitaBot();
-                services.AddScoped<BksJwcSpider>();
+                services.AddTransient<BksJwcSpider>();
                 services.AddScoped<BksJwcParser>();
+                services.AddMemoryCache();
             })
             .UseSerilog();
     }

@@ -89,6 +89,26 @@
             本方法处理完毕后继续将请求向之后的处理者传递
             </summary>
         </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.SessionType">
+            <summary>
+            会话类型
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.SessionType.None">
+            <summary>
+            无会话状态
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.SessionType.Person">
+            <summary>
+            总是按照按QQ号进行会话
+            </summary>
+        </member>
+        <member name="F:YukinoshitaBot.Data.Attributes.SessionType.Group">
+            <summary>
+            群消息按照群号进行会话
+            </summary>
+        </member>
         <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute">
             <summary>
             定义为YukinoshitaController
@@ -103,6 +123,35 @@
             <summary>
             处理模式
             </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute.SessionType">
+            <summary>
+            会话类型
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo">
+            <summary>
+            控制器信息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo"/> struct.
+            </summary>
+            <param name="controllerType">控制器类型</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.ControllerType">
+            <summary>
+            控制器类型
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.ControllerAttribute">
+            <summary>
+            控制器属性
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.CompareTo(YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo)">
+            <inheritdoc/>
         </member>
         <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute">
             <summary>
@@ -139,6 +188,30 @@
             <summary>
             处理模式
             </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo">
+            <summary>
+            消息处理方法信息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.#ctor(System.Reflection.MethodInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo"/> struct.
+            </summary>
+            <param name="method">方法</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.Method">
+            <summary>
+            方法
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.MethodAttribute">
+            <summary>
+            方法属性
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.CompareTo(YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo)">
+            <inheritdoc/>
         </member>
         <member name="T:YukinoshitaBot.Data.Content.FriendMixtureContent">
             <summary>
@@ -821,6 +894,32 @@
             </summary>
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> representing the result of the asynchronous operation.</returns>
         </member>
+        <member name="T:YukinoshitaBot.Services.ControllerCollection">
+            <summary>
+            控制器容器
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.ControllerCollection.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.ControllerCollection"/> class.
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Services.ControllerCollection.ResolvedControllers">
+            <summary>
+            已解析的控制器
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Services.ControllerCollection.Handlers">
+            <summary>
+            已解析的Handler
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Services.ControllerCollection.AddController(System.Type)">
+            <summary>
+            添加一个控制器
+            </summary>
+            <param name="controllerType">控制器类型</param>
+        </member>
         <member name="T:YukinoshitaBot.Services.IMessageHandler">
             <summary>
             消息处理器
@@ -914,22 +1013,14 @@
             实现控制器
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.Services.YukinoshitaController.#ctor">
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.#ctor(System.IServiceProvider,Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Services.IMessageHandler},YukinoshitaBot.Services.ControllerCollection,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
             <summary>
             Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.YukinoshitaController"/> class.
             </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Services.YukinoshitaController.ResolveHandlers">
-            <summary>
-            解析消息处理器
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Services.YukinoshitaController.AddController(System.Object,YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute)">
-            <summary>
-            添加控制器
-            </summary>
-            <param name="controller">要添加的控制器</param>
-            <param name="controllerInfo">控制器Attribute信息</param>
+            <param name="serviceProvider">服务容器</param>
+            <param name="controllerCollection">控制器容器</param>
+            <param name="logger">日志</param>
+            <param name="cache">缓存</param>
         </member>
         <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnFriendPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
             <inheritdoc/>
