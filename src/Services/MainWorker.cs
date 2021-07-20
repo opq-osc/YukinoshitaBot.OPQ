@@ -57,10 +57,6 @@ namespace YukinoshitaBot
             this.logger.LogInformation("WsApi: {wsApi}", wsApi);
 
             var client = new SocketIO(wsApi);
-            client.OnConnected += (s, e) => 
-            {
-                this.logger.LogInformation("YukinoshitaBot is now connected.");
-            };
             client.On("OnGroupMsgs", resp =>
             {
                 var respData = resp.GetValue<SocketResponse<GroupMessage>>();
@@ -133,6 +129,7 @@ namespace YukinoshitaBot
             });
 
             await client.ConnectAsync();
+            this.logger.LogInformation("YukinoshitaBot is now connected.");
         }
 
         /// <inheritdoc/>
