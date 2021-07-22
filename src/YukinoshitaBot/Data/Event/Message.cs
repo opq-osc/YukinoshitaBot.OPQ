@@ -107,10 +107,14 @@ namespace YukinoshitaBot.Data.Event
             }
 
             // 消息类型判别（OPQ返回的消息类型会互相覆盖，不能单纯根据MsgType判断）
-            if (rawMessage.MsgType is "PicMsg" || rawContent.Tips is "[群图片]")
+            rawMessage.MsgType = (rawMessage.MsgType, rawContent.Tips) switch
             {
-                rawMessage.MsgType = "PicMsg";
-            }
+                ("PicMsg", _) => "PicMsg",
+                (_, "[群图片]" or "[群消息-QQ闪照]") => "PicMsg",
+                ("VoiceMsg", _) => "VoiceMsg",
+                (_, "[语音]") => "VoiceMsg",
+                (_, _) => rawMessage.MsgType
+            };
 
             if (rawMessage.MsgType == "PicMsg")
             {
@@ -126,8 +130,25 @@ namespace YukinoshitaBot.Data.Event
 
                 return picMessage;
             }
+            else if (rawMessage.MsgType == "VoiceMsg")
+            {
+                return new VoiceMessage(sender, rawContent.Url ?? string.Empty)
+                {
+                    ReplayInfo = replayInfo,
+                    AtInfo = atInfo,
+                };
+            }
+            else if (rawMessage.MsgType == "XmlMsg")
+            {
+                return new XmlMessage(sender, rawContent.Content ?? string.Empty)
+                {
+                    ReplayInfo = replayInfo,
+                    AtInfo = atInfo,
+                };
+            }
             else
             {
+                // 未解析的消息全部视为文本消息
                 return new TextMessage(sender, rawContent.Content ?? string.Empty)
                 {
                     ReplayInfo = replayInfo,

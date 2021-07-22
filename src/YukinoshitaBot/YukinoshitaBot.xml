@@ -532,6 +532,45 @@
             文本消息
             </summary>
         </member>
+        <member name="T:YukinoshitaBot.Data.Event.VoiceMessage">
+            <summary>
+            语音消息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.VoiceMessage.#ctor(YukinoshitaBot.Data.Event.SenderInfo,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.VoiceMessage"/> class.
+            </summary>
+            <param name="sender">发送者信息</param>
+            <param name="fileUrl">文件URL</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.VoiceMessage.Url">
+            <summary>
+            语音文件URL
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Event.XmlMessage">
+            <summary>
+            XML消息
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.XmlMessage.#ctor(YukinoshitaBot.Data.Event.SenderInfo,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.XmlMessage"/> class.
+            </summary>
+            <param name="sender">发送者信息</param>
+            <param name="xmlContent">xml文本</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.XmlMessage.RawContent">
+            <summary>
+            原始内容
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.XmlMessage.XmlObject">
+            <summary>
+            XmlObject，使用Linq解析
+            </summary>
+        </member>
         <member name="T:YukinoshitaBot.Data.OpqApi.MessageRequestBase">
             <summary>
             用于发送消息的基类
