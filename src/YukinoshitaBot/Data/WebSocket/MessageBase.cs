@@ -28,14 +28,12 @@ namespace YukinoshitaBot.Data.WebSocket
         /// <returns>解析后类型的实例</returns>
         public T ParseContent<T>() where T : new()
         {
-            var standardJsonText = this.Content?.Replace("\\\"", "\"");
-
-            if (string.IsNullOrEmpty(standardJsonText))
+            if (string.IsNullOrEmpty(this.Content))
             {
                 return new ();
             }
 
-            return JsonSerializer.Deserialize<T>(standardJsonText) ?? new T();
+            return JsonSerializer.Deserialize<T>(this.Content) ?? new T();
         }
     }
 }
