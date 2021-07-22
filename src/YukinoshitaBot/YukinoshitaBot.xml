@@ -188,6 +188,26 @@
             文件URL，仅当图片为闪照时有效
             </summary>
         </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.MsgSeq">
+            <summary>
+            回复的消息的序列号，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.ReplayContent">
+            <summary>
+            回复消息的内容，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.SrcContent">
+            <summary>
+            回复的原消息，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.Tips">
+            <summary>
+            消息Tips
+            </summary>
+        </member>
         <member name="P:YukinoshitaBot.Data.Content.FriendMixtureContent.IsFlashPicture">
             <summary>
             是否闪照
@@ -218,9 +238,69 @@
             文件URL，仅当图片为闪照时有效
             </summary>
         </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.UserExt">
+            <summary>
+            At用户列表，仅当消息包含at时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.UserID">
+            <summary>
+            At用户QQ号列表，仅当消息包含at时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.MsgSeq">
+            <summary>
+            回复的消息的序列号，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.ReplayContent">
+            <summary>
+            回复消息的内容，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.SrcContent">
+            <summary>
+            回复的原消息，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.Tips">
+            <summary>
+            消息Tips
+            </summary>
+        </member>
         <member name="P:YukinoshitaBot.Data.Content.GroupMixtureContent.IsFlashPicture">
             <summary>
             是否闪照
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Content.QQUser.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Content.QQUser"/> class.
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.QQUser.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Content.QQUser.QQ">
+            <summary>
+            QQ号
+            </summary>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Event.IAtMessage">
+            <summary>
+            At消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.IAtMessage.AtUsers">
+            <summary>
+            At用户列表
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.IAtMessage.UserID">
+            <summary>
+            At用户QQ号列表
             </summary>
         </member>
         <member name="T:YukinoshitaBot.Data.Event.MessageType">
@@ -243,6 +323,16 @@
             Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.Message"/> class.
             </summary>
             <param name="sender">发送者信息</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.Message.IsReplayMsg">
+            <summary>
+            是否为回复消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.Message.IsAtMsg">
+            <summary>
+            是否为at消息
+            </summary>
         </member>
         <member name="P:YukinoshitaBot.Data.Event.Message.MessageType">
             <summary>
@@ -321,6 +411,21 @@
         <member name="P:YukinoshitaBot.Data.Event.PictureMessage.FirstPicture">
             <summary>
             获取第一张图片的URL
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.QQUser.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.QQUser"/> class.
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.QQUser.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.QQUser.QQ">
+            <summary>
+            QQ号
             </summary>
         </member>
         <member name="T:YukinoshitaBot.Data.Event.SenderInfo">

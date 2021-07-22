@@ -34,6 +34,42 @@ namespace YukinoshitaBot.Data.Content
         public string? Url { get; set; }
 
         /// <summary>
+        /// At用户列表，仅当消息包含at时有效
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<QQUser>? UserExt { get; set; }
+
+        /// <summary>
+        /// At用户QQ号列表，仅当消息包含at时有效
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<long>? UserID { get; set; }
+
+        /// <summary>
+        /// 回复的消息的序列号，仅当消息为回复消息时有效
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public int? MsgSeq { get; set; }
+
+        /// <summary>
+        /// 回复消息的内容，仅当消息为回复消息时有效
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? ReplayContent { get; set; }
+
+        /// <summary>
+        /// 回复的原消息，仅当消息为回复消息时有效
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? SrcContent { get; set; }
+
+        /// <summary>
+        /// 消息Tips
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string? Tips { get; set; }
+
+        /// <summary>
         /// 是否闪照
         /// </summary>
         [JsonIgnore]

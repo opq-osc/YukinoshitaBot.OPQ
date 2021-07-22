@@ -26,6 +26,26 @@ namespace YukinoshitaBot.Data.Event
         }
 
         /// <summary>
+        /// 是否为回复消息
+        /// </summary>
+        public bool IsReplayMsg { get; set; }
+
+        /// <summary>
+        /// 回复详细数据
+        /// </summary>
+        public ReplayInfo? ReplayInfo { get; set; }
+
+        /// <summary>
+        /// 是否为at消息
+        /// </summary>
+        public bool IsAtMsg { get; set; }
+
+        /// <summary>
+        /// at详细数据
+        /// </summary>
+        public AtInfo? AtInfo { get; set; }
+
+        /// <summary>
         /// 消息类型
         /// </summary>
         public MessageType MessageType { get; set; }
