@@ -26,16 +26,16 @@ namespace YukinoshitaBot.Data.WebSocket
         /// </summary>
         /// <typeparam name="T">目标类型</typeparam>
         /// <returns>解析后类型的实例</returns>
-        public T? ParseContent<T>()
+        public T ParseContent<T>() where T : new()
         {
             var standardJsonText = this.Content?.Replace("\\\"", "\"");
 
             if (string.IsNullOrEmpty(standardJsonText))
             {
-                return default;
+                return new ();
             }
 
-            return JsonSerializer.Deserialize<T>(standardJsonText);
+            return JsonSerializer.Deserialize<T>(standardJsonText) ?? new T();
         }
     }
 }

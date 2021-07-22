@@ -288,17 +288,22 @@
             QQ号
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.Data.Event.IAtMessage">
+        <member name="T:YukinoshitaBot.Data.Event.AtInfo">
             <summary>
-            At消息
+            At信息
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Event.IAtMessage.AtUsers">
+        <member name="M:YukinoshitaBot.Data.Event.AtInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.AtInfo"/> class.
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.AtInfo.AtUsers">
             <summary>
             At用户列表
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Event.IAtMessage.UserID">
+        <member name="P:YukinoshitaBot.Data.Event.AtInfo.UserID">
             <summary>
             At用户QQ号列表
             </summary>
@@ -329,9 +334,19 @@
             是否为回复消息
             </summary>
         </member>
+        <member name="P:YukinoshitaBot.Data.Event.Message.ReplayInfo">
+            <summary>
+            回复详细数据
+            </summary>
+        </member>
         <member name="P:YukinoshitaBot.Data.Event.Message.IsAtMsg">
             <summary>
             是否为at消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.Message.AtInfo">
+            <summary>
+            at详细数据
             </summary>
         </member>
         <member name="P:YukinoshitaBot.Data.Event.Message.MessageType">
@@ -426,6 +441,26 @@
         <member name="P:YukinoshitaBot.Data.Event.QQUser.QQ">
             <summary>
             QQ号
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.ReplayInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Event.ReplayInfo"/> class.
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.ReplayInfo.MsgSeq">
+            <summary>
+            回复的消息的序列号，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.ReplayInfo.ReplayContent">
+            <summary>
+            回复消息的内容，仅当消息为回复消息时有效
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Event.ReplayInfo.SrcContent">
+            <summary>
+            回复的原消息，仅当消息为回复消息时有效
             </summary>
         </member>
         <member name="T:YukinoshitaBot.Data.Event.SenderInfo">

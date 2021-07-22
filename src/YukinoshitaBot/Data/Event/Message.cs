@@ -76,24 +76,63 @@ namespace YukinoshitaBot.Data.Event
 
             var sender = new SenderInfo(rawMessage.FromUserId, rawMessage.FromGroupId,
                 rawMessage.FromGroupName ?? string.Empty, rawMessage.FromNickName ?? string.Empty);
+
+            // 若为TextMsg，则不必可能有At和Replay
             if (rawMessage.MsgType == "TextMsg")
             {
                 return new TextMessage(sender, rawMessage.Content ?? string.Empty);
             }
-            else if (rawMessage.MsgType == "PicMsg")
+
+            // 若不为TextMsg，则消息体必为Json
+            var rawContent = rawMessage.ParseContent<GroupMixtureContent>();
+
+            // 处理可能存在的At和Replay数据
+            var atInfo = new AtInfo();
+            var replayInfo = new ReplayInfo();
+
+            // 存在At数据
+            if (rawContent.UserExt is not null && rawContent.UserID is not null)
             {
-                var rawContent = rawMessage.ParseContent<GroupMixtureContent>();
+                atInfo.AtUsers.AddRange(from user in rawContent.UserExt
+                                        select new QQUser { NickName = user.NickName, QQ = user.QQ });
+                atInfo.UserID.AddRange(rawContent.UserID);
+            }
+
+            // 存在Replay数据
+            if (rawContent.MsgSeq is int msgSeq && rawContent.ReplayContent is not null && rawContent.SrcContent is not null)
+            {
+                replayInfo.MsgSeq = msgSeq;
+                replayInfo.ReplayContent = rawContent.ReplayContent;
+                replayInfo.SrcContent = rawContent.SrcContent;
+            }
+
+            // 消息类型判别（OPQ返回的消息类型会互相覆盖，不能单纯根据MsgType判断）
+            if (rawMessage.MsgType is "PicMsg" || rawContent.Tips is "[群图片]")
+            {
+                rawMessage.MsgType = "PicMsg";
+            }
+
+            if (rawMessage.MsgType == "PicMsg")
+            {
                 var picMessage = rawContent?.IsFlashPicture switch
                 {
                     true => new PictureMessage(sender, rawContent.Url ?? string.Empty),
                     false => new PictureMessage(sender, from pic in rawContent.GroupPic select pic.Url, rawContent.Content ?? string.Empty),
                     null => throw new System.ArgumentException("cannot determine content type.")
                 };
+
+                picMessage.ReplayInfo = replayInfo;
+                picMessage.AtInfo = atInfo;
+
                 return picMessage;
             }
             else
             {
-                throw new System.NotImplementedException("not surpported content type " + rawMessage.MsgType);
+                return new TextMessage(sender, rawContent.Content ?? string.Empty)
+                {
+                    ReplayInfo = replayInfo,
+                    AtInfo = atInfo,
+                };
             }
         }
 
