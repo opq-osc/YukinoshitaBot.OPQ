@@ -27,6 +27,7 @@ namespace YukinoshitaBot.Services
         private readonly ILogger logger;
         private readonly ControllerCollection controllers;
         private readonly IMemoryCache cache;
+        private readonly IServiceScope scope;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="YukinoshitaController"/> class.
@@ -45,6 +46,7 @@ namespace YukinoshitaBot.Services
             this.logger = logger;
             this.controllers = controllerCollection;
             this.cache = cache;
+            this.scope = serviceProvider.CreateScope();
         }
 
         /// <inheritdoc/>
@@ -52,21 +54,23 @@ namespace YukinoshitaBot.Services
         {
             foreach (var controller in this.controllers.ResolvedControllers)
             {
+                var handled = false;
                 foreach (var method in this.controllers.Handlers[controller.ControllerType])
                 {
                     if (CheckMatch(msg.Content, method.MethodAttribute.Command, method.MethodAttribute.MatchMethod))
                     {
                         var controllerObj = this.GetController(controller, msg.SenderInfo);
                         method.Method.Invoke(controllerObj, new object[] { msg });
-                    }
+                        handled = true;
 
-                    if (method.MethodAttribute.Mode is HandleMode.Break)
-                    {
-                        break;
+                        if (method.MethodAttribute.Mode is HandleMode.Break)
+                        {
+                            break;
+                        }
                     }
                 }
 
-                if (controller.ControllerAttribute.Mode is HandleMode.Break)
+                if (handled && controller.ControllerAttribute.Mode is HandleMode.Break)
                 {
                     break;
                 }
@@ -78,21 +82,23 @@ namespace YukinoshitaBot.Services
         {
             foreach (var controller in this.controllers.ResolvedControllers)
             {
+                var handled = false;
                 foreach (var method in this.controllers.Handlers[controller.ControllerType])
                 {
                     if (CheckMatch(msg.Content, method.MethodAttribute.Command, method.MethodAttribute.MatchMethod))
                     {
                         var controllerObj = this.GetController(controller, msg.SenderInfo);
                         method.Method.Invoke(controllerObj, new object[] { msg });
-                    }
+                        handled = true;
 
-                    if (method.MethodAttribute.Mode is HandleMode.Break)
-                    {
-                        break;
+                        if (method.MethodAttribute.Mode is HandleMode.Break)
+                        {
+                            break;
+                        }
                     }
                 }
 
-                if (controller.ControllerAttribute.Mode is HandleMode.Break)
+                if (handled && controller.ControllerAttribute.Mode is HandleMode.Break)
                 {
                     break;
                 }
@@ -104,21 +110,23 @@ namespace YukinoshitaBot.Services
         {
             foreach (var controller in this.controllers.ResolvedControllers)
             {
+                var handled = false;
                 foreach (var method in this.controllers.Handlers[controller.ControllerType])
                 {
                     if (CheckMatch(msg.Content, method.MethodAttribute.Command, method.MethodAttribute.MatchMethod))
                     {
                         var controllerObj = this.GetController(controller, msg.SenderInfo);
                         method.Method.Invoke(controllerObj, new object[] { msg });
-                    }
+                        handled = true;
 
-                    if (method.MethodAttribute.Mode is HandleMode.Break)
-                    {
-                        break;
+                        if (method.MethodAttribute.Mode is HandleMode.Break)
+                        {
+                            break;
+                        }
                     }
                 }
 
-                if (controller.ControllerAttribute.Mode is HandleMode.Break)
+                if (handled && controller.ControllerAttribute.Mode is HandleMode.Break)
                 {
                     break;
                 }
@@ -179,7 +187,7 @@ namespace YukinoshitaBot.Services
 
             if (!cacheHit)
             {
-                controller = this.serviceProvider.GetService(controllerType);
+                controller = this.scope.ServiceProvider.GetService(controllerType);
                 this.logger.LogDebug("creating new controller {key}", cacheKey);
                 if (controller is null)
                 {
@@ -207,7 +215,7 @@ namespace YukinoshitaBot.Services
 
             if (!cacheHit)
             {
-                controller = this.serviceProvider.GetService(controllerType);
+                controller = this.scope.ServiceProvider.GetService(controllerType);
                 if (controller is null)
                 {
                     throw new InvalidOperationException("controller is not resolved.");
@@ -233,7 +241,7 @@ namespace YukinoshitaBot.Services
 
             if (!cacheHit)
             {
-                controller = this.serviceProvider.GetService(controllerType);
+                controller = this.scope.ServiceProvider.GetService(controllerType);
                 if (controller is null)
                 {
                     throw new InvalidOperationException("controller is not resolved.");
