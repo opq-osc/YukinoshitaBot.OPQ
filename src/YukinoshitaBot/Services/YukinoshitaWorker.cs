@@ -28,6 +28,8 @@ namespace YukinoshitaBot
         private readonly IConfiguration configuration;
         private readonly OpqApi opqApi;
         private readonly IMessageHandler msgHandler;
+        private SocketIO client;
+        private string wsApi;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="YukinoshitaWorker"/> class.
@@ -50,16 +52,21 @@ namespace YukinoshitaBot
             var botConfig = this.configuration.GetSection("OpqApiSettings");
             var httpApi = botConfig.GetValue<string>("HttpApi");
             var loginQQ = botConfig.GetValue<long>("LoginQQ");
-            var wsApi = botConfig.GetValue<string>("WebSocketApi");
+            this.wsApi = botConfig.GetValue<string>("WebSocketApi");
 
             this.logger.LogInformation("Starting YukinoshitaBot...");
             this.logger.LogInformation("HttpApi: {httpApi}", httpApi);
             this.logger.LogInformation("LoginQQ: {loginQQ}", loginQQ);
-            this.logger.LogInformation("WsApi: {wsApi}", wsApi);
+            this.logger.LogInformation("WsApi: {wsApi}", this.wsApi);
+            await this.NewClientAsync(this.wsApi);
+        }
 
-            var client = new SocketIO(wsApi);
-            client.On("OnGroupMsgs", resp =>
+        private async Task NewClientAsync(string wsApi)
+        {
+            this.client = new SocketIO(wsApi);
+            this.client.On("OnGroupMsgs", resp =>
             {
+                this.logger.LogDebug(resp.ToString());
                 var respData = resp.GetValue<SocketResponse<GroupMessage>>();
 
                 // 过滤自身消息
@@ -69,7 +76,7 @@ namespace YukinoshitaBot
                 }
 
                 Message? msg = null;
-                try 
+                try
                 {
                     msg = Message.Parse(respData.CurrentPacket?.Data);
                     msg.OpqApi = this.opqApi;
@@ -93,8 +100,9 @@ namespace YukinoshitaBot
                         break;
                 }
             });
-            client.On("OnFriendMsgs", resp =>
+            this.client.On("OnFriendMsgs", resp =>
             {
+                this.logger.LogDebug(resp.ToString());
                 var respData = resp.GetValue<SocketResponse<FriendMessage>>();
 
                 // 过滤自身消息
@@ -128,9 +136,21 @@ namespace YukinoshitaBot
                         break;
                 }
             });
+            this.client.OnDisconnected += this.WhenDisconnect;
+            this.client.OnConnected += this.WhenConnect;
 
-            await client.ConnectAsync();
+            await this.client.ConnectAsync();
+        }
+
+        private void WhenConnect(object? sender, EventArgs e)
+        {
             this.logger.LogInformation("YukinoshitaBot is now connected.");
+        }
+
+        private async void WhenDisconnect(object? sender, string e)
+        {
+            this.logger.LogInformation("YukinoshitaBot just disconnect.");
+            await this.NewClientAsync(this.wsApi);
         }
 
         /// <inheritdoc/>
