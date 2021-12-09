@@ -11,12 +11,8 @@ namespace YukinoshitaBot
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
     using SocketIOClient;
-    using YukinoshitaBot.Data;
-    using YukinoshitaBot.Data.Content;
     using YukinoshitaBot.Data.Event;
-    using YukinoshitaBot.Data.OpqApi;
     using YukinoshitaBot.Data.WebSocket;
-    using YukinoshitaBot.Extensions;
     using YukinoshitaBot.Services;
 
     /// <summary>
@@ -28,8 +24,8 @@ namespace YukinoshitaBot
         private readonly IConfiguration configuration;
         private readonly OpqApi opqApi;
         private readonly IMessageHandler msgHandler;
-        private SocketIO client;
-        private string wsApi;
+        private SocketIO client = null!;
+        private string wsApi = null!;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="YukinoshitaWorker"/> class.
@@ -67,6 +63,7 @@ namespace YukinoshitaBot
             this.client.On("OnGroupMsgs", resp =>
             {
                 this.logger.LogDebug(resp.ToString());
+                // TODO 收到红包的话这个解析好像会寄
                 var respData = resp.GetValue<SocketResponse<GroupMessage>>();
 
                 // 过滤自身消息
@@ -136,22 +133,17 @@ namespace YukinoshitaBot
                         break;
                 }
             });
-            this.client.OnDisconnected += this.WhenDisconnect;
             this.client.OnConnected += this.WhenConnect;
 
-            await this.client.ConnectAsync();
+            await this.client.ConnectAsync().ConfigureAwait(false);
         }
 
         private void WhenConnect(object? sender, EventArgs e)
         {
             this.logger.LogInformation("YukinoshitaBot is now connected.");
+            this.client.OnConnected -= this.WhenConnect;
         }
 
-        private async void WhenDisconnect(object? sender, string e)
-        {
-            this.logger.LogInformation("YukinoshitaBot just disconnect.");
-            await this.NewClientAsync(this.wsApi);
-        }
 
         /// <inheritdoc/>
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

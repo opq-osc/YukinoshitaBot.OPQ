@@ -4,24 +4,27 @@
         <name>YukinoshitaBot</name>
     </assembly>
     <members>
-        <member name="T:YukinoshitaBot.Data.Attributes.CommandMatchMethod">
+        <member name="T:YukinoshitaBot.Data.Attributes.CmdRouteAttribute">
             <summary>
-            指令识别方式
+            [CmdRoute("测试{requsite}{option?}{key:append}")] <br/>
+            {key}  ->  (?&lt;key&gt;.+?)
             </summary>
         </member>
-        <member name="F:YukinoshitaBot.Data.Attributes.CommandMatchMethod.StartWith">
+        <member name="M:YukinoshitaBot.Data.Attributes.CmdRouteAttribute.BuildCmdRegex(System.Collections.Generic.Queue{YukinoshitaBot.Data.Attributes.CmdRouteAttribute.CmdUnit})">
             <summary>
-            开头识别
+            构建用于命令匹配的正则表达式
+            </summary>
+            <param name="queue">命令单元列表</param>
+            <returns></returns>
+        </member>
+        <member name="T:YukinoshitaBot.Data.Attributes.CmdRouteAttribute.CmdUnit">
+            <summary>
+            命令单元
             </summary>
         </member>
-        <member name="F:YukinoshitaBot.Data.Attributes.CommandMatchMethod.Strict">
+        <member name="T:YukinoshitaBot.Data.Attributes.CmdRouteAttribute.CmdType">
             <summary>
-            严格一致
-            </summary>
-        </member>
-        <member name="F:YukinoshitaBot.Data.Attributes.CommandMatchMethod.Regex">
-            <summary>
-            正则匹配
+            命令单元类型
             </summary>
         </member>
         <member name="T:YukinoshitaBot.Data.Attributes.HandleMode">
@@ -39,45 +42,67 @@
             本方法处理完毕后继续将请求向之后的处理者传递
             </summary>
         </member>
-        <member name="T:YukinoshitaBot.Data.Attributes.SessionType">
+        <member name="T:YukinoshitaBot.Data.Attributes.RegexRouteAttribute">
             <summary>
-            会话类型
+            使用正则进行匹配
             </summary>
         </member>
-        <member name="F:YukinoshitaBot.Data.Attributes.SessionType.None">
+        <member name="T:YukinoshitaBot.Data.Attributes.StartRouteAttribute">
             <summary>
-            无会话状态
+            当输入的指令以设置的命令为起始时匹配
+            Command = "Hello"
+            "Hello" 匹配
+            "Hello world" 匹配
             </summary>
         </member>
-        <member name="F:YukinoshitaBot.Data.Attributes.SessionType.Person">
+        <member name="T:YukinoshitaBot.Data.Attributes.StrictRouteAttribute">
             <summary>
-            总是按照按QQ号进行会话
+            当输入的指令与设置指令完全一致时才匹配
+            Command = "Hello"
+            "Hello" 匹配
+            "Hello world" 不匹配
             </summary>
         </member>
-        <member name="F:YukinoshitaBot.Data.Attributes.SessionType.Group">
-            <summary>
-            群消息按照群号进行会话
-            </summary>
-        </member>
-        <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute">
+        <member name="T:YukinoshitaBot.Data.Attributes.YukinoRouteAttribute">
             <summary>
             定义为YukinoshitaController
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute.Priority">
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoRouteAttribute.Command">
+            <summary>
+            匹配的指令
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoRouteAttribute.Priority">
             <summary>
             优先级，越小优先级越高
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute.Mode">
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoRouteAttribute.Mode">
             <summary>
             处理模式
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerAttribute.SessionType">
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoRouteAttribute.MaxLength">
             <summary>
-            会话类型
+            超过则忽略此消息
             </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoRouteAttribute.TryMatch(System.String,System.Collections.Generic.Dictionary{System.String,System.String}@)">
+            <summary>
+            检验输入指令是否匹配控制器
+            </summary>
+            <param name="msg">输入的指令</param>
+            <param name="matchPairs">得到的匹配键值对</param>
+            <returns></returns>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoRouteAttribute.CheckLength(System.String)">
+            <summary>
+            检验输入指令是否符合
+            排除空字符串和超长字符串
+            </summary>
+            <param name="content">输入指令</param>
+            <returns></returns>
         </member>
         <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo">
             <summary>
@@ -90,77 +115,56 @@
             </summary>
             <param name="controllerType">控制器类型</param>
         </member>
+        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.TryGetHandlers(YukinoshitaBot.Data.Event.MessageType,YukinoshitaBot.Data.Event.SenderType,System.Collections.Generic.List{System.Reflection.MethodInfo}@)">
+            <summary>
+            获取处理对应消息类型的方法
+            </summary>
+            <param name="msgType">消息类型</param>
+            <param name="methods">方法</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
         <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.ControllerType">
             <summary>
             控制器类型
             </summary>
         </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.ControllerAttribute">
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.YukinoRouteAttribute">
             <summary>
             控制器属性
             </summary>
         </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.FriendTextHandlers">
+            <summary>
+            好友文本消息处理的方法
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.FriendImageHandlers">
+            <summary>
+            好友图片消息的处理方法
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.GroupTextHandlers">
+            <summary>
+            群组文本消息的处理方法
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.GroupImageHandlers">
+            <summary>
+            群组图片消息的处理方法
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.TempSessionTextHandlers">
+            <summary>
+            临时会话文本消息的处理方法
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.TempSessionImageHandlers">
+            <summary>
+            临时会话图片消息的处理方法
+            </summary>
+        </member>
         <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo.CompareTo(YukinoshitaBot.Data.Attributes.YukinoshitaControllerInfo)">
-            <inheritdoc/>
-        </member>
-        <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute">
-            <summary>
-            定义为Yukinoshita消息处理方法
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute"/> class.
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute"/> class.
-            </summary>
-            <param name="command">要匹配的指令</param>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.MatchMethod">
-            <summary>
-            指令识别方式
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.Command">
-            <summary>
-            匹配的指令
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.Priority">
-            <summary>
-            优先级，越小优先级越高
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerAttribute.Mode">
-            <summary>
-            处理模式
-            </summary>
-        </member>
-        <member name="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo">
-            <summary>
-            消息处理方法信息
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.#ctor(System.Reflection.MethodInfo)">
-            <summary>
-            Initializes a new instance of the <see cref="T:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo"/> struct.
-            </summary>
-            <param name="method">方法</param>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.Method">
-            <summary>
-            方法
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.MethodAttribute">
-            <summary>
-            方法属性
-            </summary>
-        </member>
-        <member name="M:YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo.CompareTo(YukinoshitaBot.Data.Attributes.YukinoshitaHandlerInfo)">
             <inheritdoc/>
         </member>
         <member name="T:YukinoshitaBot.Data.Content.FriendMixtureContent">
@@ -288,6 +292,85 @@
             QQ号
             </summary>
         </member>
+        <member name="T:YukinoshitaBot.Data.Controller.BotControllerBase">
+            <summary>
+            机器人消息类
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.Message">
+            <summary>
+            接收到的消息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.SenderInfo">
+            <summary>
+            消息发送者的信息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.MessageType">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.SenderType">
+            <summary>
+            发送者类型
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.FromQQ">
+            <summary>
+            消息来源用户QQ号
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.FromGroupId">
+            <summary>
+            消息来源群号
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Controller.BotControllerBase.ReplyTextMsg(System.String)">
+            <summary>
+            返回文本消息
+            </summary>
+            <param name="msg">需要发送的文本</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Controller.BotControllerBase.ReplyPictureMsg(System.String)">
+            <summary>
+            返回图片消息
+            </summary>
+            <param name="base64EncodedImage">base64图片</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Controller.BotControllerBase.ReplyPictureMsg(System.Uri)">
+            <summary>
+            返回图片消息
+            </summary>
+            <param name="picUri">图片UR</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Controller.BotControllerBase.ReplyPictureMsg(System.IO.FileInfo)">
+            <summary>
+            返回图片消息
+            </summary>
+            <param name="localPicture">本地图片文件</param>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.MatchPairs">
+            <summary>
+            匹配得到的参数键值对
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.ParamErrors">
+            <summary>
+            参数验证中的错误信息
+            </summary>
+        </member>
+        <member name="P:YukinoshitaBot.Data.Controller.BotControllerBase.IsValid">
+            <summary>
+            参数验证是否成功
+            </summary>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Controller.BotControllerBase.OnValidationError">
+            <summary>
+            当参数验证失败时调用，重写以自定义参数验证失败时的处理逻辑。
+            </summary>
+        </member>
         <member name="T:YukinoshitaBot.Data.Event.AtInfo">
             <summary>
             At信息
@@ -387,6 +470,30 @@
             回复消息
             </summary>
             <param name="resp">要回复的消息</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.ReplyText(System.String)">
+            <summary>
+            返回文本消息
+            </summary>
+            <param name="msg">需要发送的文本</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.ReplyPicture(System.String)">
+            <summary>
+            返回图片消息
+            </summary>
+            <param name="base64EncodedImage">base64图片</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.ReplyPicture(System.Uri)">
+            <summary>
+            返回图片消息
+            </summary>
+            <param name="picUri">图片UR</param>
+        </member>
+        <member name="M:YukinoshitaBot.Data.Event.Message.ReplyPicture(System.IO.FileInfo)">
+            <summary>
+            返回图片消息
+            </summary>
+            <param name="localPicture">本地图片文件</param>
         </member>
         <member name="T:YukinoshitaBot.Data.Event.PictureMessage">
             <summary>
@@ -906,7 +1013,7 @@
             控制器容器
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.Services.ControllerCollection.#ctor">
+        <member name="M:YukinoshitaBot.Services.ControllerCollection.#ctor(System.IServiceProvider)">
             <summary>
             Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.ControllerCollection"/> class.
             </summary>
@@ -914,11 +1021,6 @@
         <member name="P:YukinoshitaBot.Services.ControllerCollection.ResolvedControllers">
             <summary>
             已解析的控制器
-            </summary>
-        </member>
-        <member name="P:YukinoshitaBot.Services.ControllerCollection.Handlers">
-            <summary>
-            已解析的Handler
             </summary>
         </member>
         <member name="M:YukinoshitaBot.Services.ControllerCollection.AddController(System.Type)">
@@ -1003,14 +1105,11 @@
             实现控制器
             </summary>
         </member>
-        <member name="M:YukinoshitaBot.Services.YukinoshitaController.#ctor(System.IServiceProvider,Microsoft.Extensions.Logging.ILogger{YukinoshitaBot.Services.IMessageHandler},YukinoshitaBot.Services.ControllerCollection,Microsoft.Extensions.Caching.Memory.IMemoryCache)">
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.#ctor(YukinoshitaBot.Services.ControllerCollection)">
             <summary>
             Initializes a new instance of the <see cref="T:YukinoshitaBot.Services.YukinoshitaController"/> class.
             </summary>
-            <param name="serviceProvider">服务容器</param>
             <param name="controllerCollection">控制器容器</param>
-            <param name="logger">日志</param>
-            <param name="cache">缓存</param>
         </member>
         <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnFriendPictureMsgRecieved(YukinoshitaBot.Data.Event.PictureMessage)">
             <inheritdoc/>
@@ -1023,6 +1122,13 @@
         </member>
         <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnGroupTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
             <inheritdoc/>
+        </member>
+        <member name="M:YukinoshitaBot.Services.YukinoshitaController.OnTextMsgRecieved(YukinoshitaBot.Data.Event.TextMessage)">
+            <summary>
+            文本消息处理
+            </summary>
+            <param name="msg">文本消息</param>
+            <exception cref="T:System.NullReferenceException"></exception>
         </member>
         <member name="T:YukinoshitaBot.YukinoshitaWorker">
             <summary>

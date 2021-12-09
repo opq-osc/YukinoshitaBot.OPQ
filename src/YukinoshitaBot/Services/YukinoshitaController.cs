@@ -5,17 +5,11 @@
 namespace YukinoshitaBot.Services
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
+    using System.ComponentModel.DataAnnotations;
     using System.Reflection;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading.Tasks;
-    using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using YukinoshitaBot.Data.Attributes;
+    using YukinoshitaBot.Data.Controller;
     using YukinoshitaBot.Data.Event;
 
     /// <summary>
@@ -23,241 +17,166 @@ namespace YukinoshitaBot.Services
     /// </summary>
     internal class YukinoshitaController : IMessageHandler
     {
-        private readonly IServiceProvider serviceProvider;
-        private readonly ILogger logger;
         private readonly ControllerCollection controllers;
-        private readonly IMemoryCache cache;
-        private readonly IServiceScope scope;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="YukinoshitaController"/> class.
         /// </summary>
-        /// <param name="serviceProvider">服务容器</param>
         /// <param name="controllerCollection">控制器容器</param>
-        /// <param name="logger">日志</param>
-        /// <param name="cache">缓存</param>
         public YukinoshitaController(
-            IServiceProvider serviceProvider,
-            ILogger<IMessageHandler> logger,
-            ControllerCollection controllerCollection,
-            IMemoryCache cache)
+            ControllerCollection controllerCollection)
         {
-            this.serviceProvider = serviceProvider;
-            this.logger = logger;
             this.controllers = controllerCollection;
-            this.cache = cache;
-            this.scope = serviceProvider.CreateScope();
         }
 
         /// <inheritdoc/>
         public void OnFriendPictureMsgRecieved(PictureMessage msg)
         {
-            foreach (var controller in this.controllers.ResolvedControllers)
-            {
-                var handled = false;
-                foreach (var method in this.controllers.Handlers[controller.ControllerType])
-                {
-                    if (CheckMatch(msg.Content, method.MethodAttribute.Command, method.MethodAttribute.MatchMethod))
-                    {
-                        var controllerObj = this.GetController(controller, msg.SenderInfo);
-                        method.Method.Invoke(controllerObj, new object[] { msg });
-                        handled = true;
-
-                        if (method.MethodAttribute.Mode is HandleMode.Break)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                if (handled && controller.ControllerAttribute.Mode is HandleMode.Break)
-                {
-                    break;
-                }
-            }
+            OnPictureMsgRecieved(msg);
         }
 
         /// <inheritdoc/>
         public void OnFriendTextMsgRecieved(TextMessage msg)
         {
-            foreach (var controller in this.controllers.ResolvedControllers)
-            {
-                var handled = false;
-                foreach (var method in this.controllers.Handlers[controller.ControllerType])
-                {
-                    if (CheckMatch(msg.Content, method.MethodAttribute.Command, method.MethodAttribute.MatchMethod))
-                    {
-                        var controllerObj = this.GetController(controller, msg.SenderInfo);
-                        method.Method.Invoke(controllerObj, new object[] { msg });
-                        handled = true;
-
-                        if (method.MethodAttribute.Mode is HandleMode.Break)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                if (handled && controller.ControllerAttribute.Mode is HandleMode.Break)
-                {
-                    break;
-                }
-            }
+            OnTextMsgRecieved(msg);
         }
 
         /// <inheritdoc/>
         public void OnGroupPictureMsgRecieved(PictureMessage msg)
         {
-            foreach (var controller in this.controllers.ResolvedControllers)
-            {
-                var handled = false;
-                foreach (var method in this.controllers.Handlers[controller.ControllerType])
-                {
-                    if (CheckMatch(msg.Content, method.MethodAttribute.Command, method.MethodAttribute.MatchMethod))
-                    {
-                        var controllerObj = this.GetController(controller, msg.SenderInfo);
-                        method.Method.Invoke(controllerObj, new object[] { msg });
-                        handled = true;
-
-                        if (method.MethodAttribute.Mode is HandleMode.Break)
-                        {
-                            break;
-                        }
-                    }
-                }
-
-                if (handled && controller.ControllerAttribute.Mode is HandleMode.Break)
-                {
-                    break;
-                }
-            }
+            OnPictureMsgRecieved(msg);
         }
 
         /// <inheritdoc/>
         public void OnGroupTextMsgRecieved(TextMessage msg)
         {
-            foreach (var controller in this.controllers.ResolvedControllers)
+            OnTextMsgRecieved(msg);
+        }
+
+        /// <summary>
+        /// 文本消息处理
+        /// </summary>
+        /// <param name="msg">文本消息</param>
+        /// <exception cref="NullReferenceException"></exception>
+        public void OnTextMsgRecieved(TextMessage msg)
+        {
+            foreach (var controller in controllers.ResolvedControllers)
             {
-                var handled = false;
-                foreach (var method in this.controllers.Handlers[controller.ControllerType])
+                if (!controller.TryGetHandlers(msg.MessageType, msg.SenderInfo.SenderType, out var methods))
                 {
-                    if (CheckMatch(msg.Content, method.MethodAttribute.Command, method.MethodAttribute.MatchMethod))
-                    {
-                        var controllerObj = this.GetController(controller, msg.SenderInfo);
-                        method.Method.Invoke(controllerObj, new object[] { msg });
-                        handled = true;
-
-                        if (method.MethodAttribute.Mode is HandleMode.Break)
-                        {
-                            break;
-                        }
-                    }
+                    continue;
                 }
-
-                if (handled && controller.ControllerAttribute.Mode is HandleMode.Break)
+                if (!controller.YukinoRouteAttribute.CheckLength(msg.Content))
+                {
+                    continue;
+                }
+                if (!controller.YukinoRouteAttribute.TryMatch(msg.Content, out var matchPairs))
+                {
+                    continue;
+                }
+                BotControllerBase controllerObj = controllers.GetController(controller.ControllerType)
+                    ?? throw new NullReferenceException();
+                controllerObj.MatchPairs = matchPairs;
+                controllerObj.Message = msg;
+                if (InvokeMethod(controllerObj, methods)
+                    && controller.YukinoRouteAttribute.Mode == HandleMode.Break)
                 {
                     break;
                 }
             }
         }
 
-        private static bool CheckMatch(string msg, string cmd, CommandMatchMethod method) => method switch
+        public void OnPictureMsgRecieved(PictureMessage msg)
         {
-            CommandMatchMethod.Strict => msg == cmd,
-            CommandMatchMethod.StartWith => msg.StartsWith(cmd),
-            CommandMatchMethod.Regex => Regex.IsMatch(msg, cmd),
-            _ => false
-        };
-
-        private object GetController(YukinoshitaControllerInfo controllerInfo, SenderInfo msgSender)
-        {
-            return (controllerInfo.ControllerAttribute.SessionType, msgSender.SenderType) switch
+            foreach (var controller in controllers.ResolvedControllers)
             {
-                (_, SenderType.Friend or SenderType.TempSession) => this.GetPersonalController(controllerInfo.ControllerType, msgSender.FromQQ ?? default),
-                (SessionType.Person, SenderType.Group) => this.GetPersonalController(controllerInfo.ControllerType, msgSender.FromQQ ?? default),
-                (SessionType.Group, SenderType.Group) => this.GetGroupController(controllerInfo.ControllerType, msgSender.FromGroupId ?? default),
-                (_, _) => this.GetNoSessionController(controllerInfo.ControllerType)
-            };
+                if (!controller.TryGetHandlers(msg.MessageType, msg.SenderInfo.SenderType, out var methods))
+                {
+                    continue;
+                }
+                if (!controller.YukinoRouteAttribute.CheckLength(msg.Content))
+                {
+                    continue;
+                }
+                if (!controller.YukinoRouteAttribute.TryMatch(msg.Content, out var matchPairs))
+                {
+                    continue;
+                }
+                var controllerObj = controllers.GetController(controller.ControllerType)
+                    ?? throw new NullReferenceException();
+                controllerObj.MatchPairs = matchPairs;
+                controllerObj.Message = msg;
+                if (InvokeMethod(controllerObj, methods)
+                    && controller.YukinoRouteAttribute.Mode == HandleMode.Break)
+                {
+                    break;
+                }
+            }
         }
 
-        private object GetPersonalController(Type controllerType, long qq)
+        private bool InvokeMethod(BotControllerBase controllerObj, List<MethodInfo> methods)
         {
-            var cacheKey = $"PersonnalController_{controllerType.FullName}_{qq}";
-            var cacheHit = this.cache.TryGetValue(cacheKey, out var controller);
-
-            if (!cacheHit)
+            foreach (var method in methods)
             {
-                controller = this.scope.ServiceProvider.GetService(controllerType);
-                this.logger.LogDebug("creating new controller {key}", cacheKey);
-                if (controller is null)
+                object?[] paramsIn = ValidMethod(controllerObj, method);
+                if (controllerObj.IsValid)
                 {
-                    throw new InvalidOperationException("controller is not resolved.");
+                    method.Invoke(controllerObj, paramsIn);
                 }
-
-                // 会话缓存10min
-                this.cache.Set(cacheKey, controller, new TimeSpan(0, 10, 0));
+                else
+                {
+                    controllerObj.OnValidationError();
+                }
             }
-            else
-            {
-                // 刷新缓存
-                this.logger.LogDebug("got controller from cache {key}", cacheKey);
-                this.cache.Remove(cacheKey);
-                this.cache.Set(cacheKey, controller, new TimeSpan(0, 10, 0));
-            }
-
-            return controller;
+            return true;
         }
 
-        private object GetGroupController(Type controllerType, long groupId)
+        private object?[] ValidMethod(BotControllerBase controllerObj, MethodInfo method)
         {
-            var cacheKey = $"GroupController_{controllerType.FullName}_{groupId}";
-            var cacheHit = this.cache.TryGetValue(cacheKey, out var controller);
-
-            if (!cacheHit)
+            var @params = method.GetParameters();
+            var paramsIn = new object?[@params.Length];
+            for (int i = 0; i < @params.Length; i++)
             {
-                controller = this.scope.ServiceProvider.GetService(controllerType);
-                if (controller is null)
+                var name = @params[i].Name ?? throw new ArgumentNullException("name can't be null");
+                if (controllerObj.MatchPairs.TryGetValue(name, out var value))
                 {
-                    throw new InvalidOperationException("controller is not resolved.");
+                    if (TryValidParam(value, @params[i], out var errorInfo))
+                    {
+                        paramsIn[i] = Convert.ChangeType(value, @params[i].ParameterType);
+                        continue;
+                    }
+                    else
+                    {
+                        if (errorInfo != null)
+                        {
+                            controllerObj.ParamErrors.Add(errorInfo);
+                        }
+                        controllerObj.IsValid = false;
+                    }
                 }
-
-                // 会话缓存10min
-                this.cache.Set(cacheKey, controller, new TimeSpan(0, 10, 0));
-            }
-            else
-            {
-                // 刷新缓存
-                this.cache.Remove(cacheKey);
-                this.cache.Set(cacheKey, controller, new TimeSpan(0, 10, 0));
+                else
+                {
+                    paramsIn[i] = @params[i].DefaultValue
+                        ?? throw new ArgumentException($"can't get the value of key:{name} from the regex groups, and the parameter doesn't have a default value, please check your regex.");
+                }
             }
 
-            return controller;
+            return paramsIn;
         }
 
-        private object GetNoSessionController(Type controllerType)
+        private bool TryValidParam(string value, ParameterInfo info, out string? errorInfo)
         {
-            var cacheKey = $"Controller_{controllerType.FullName}";
-            var cacheHit = this.cache.TryGetValue(cacheKey, out var controller);
-
-            if (!cacheHit)
+            var attrs = info.GetCustomAttributes<ValidationAttribute>();
+            foreach (var attr in attrs)
             {
-                controller = this.scope.ServiceProvider.GetService(controllerType);
-                if (controller is null)
+                if (!attr.IsValid(value))
                 {
-                    throw new InvalidOperationException("controller is not resolved.");
+                    errorInfo = attr.ErrorMessage;
+                    return false;
                 }
-
-                // 会话缓存60min
-                this.cache.Set(cacheKey, controller, new TimeSpan(1, 0, 0));
             }
-            else
-            {
-                // 刷新缓存
-                this.cache.Remove(cacheKey);
-                this.cache.Set(cacheKey, controller, new TimeSpan(1, 0, 0));
-            }
-
-            return controller;
+            errorInfo = null;
+            return true;
         }
     }
 }
