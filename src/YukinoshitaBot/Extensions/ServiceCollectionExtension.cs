@@ -4,10 +4,10 @@
 
 namespace YukinoshitaBot.Extensions
 {
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Microsoft.Extensions.DependencyInjection;
     using YukinoshitaBot.Data.Attributes;
     using YukinoshitaBot.Services;
 
@@ -48,7 +48,7 @@ namespace YukinoshitaBot.Extensions
             var controllerTypes = new List<Type>();
             foreach (var type in ass.GetTypes())
             {
-                if (type.GetCustomAttribute<YukinoshitaControllerAttribute>() is YukinoshitaControllerAttribute)
+                if (type.GetCustomAttribute<YukinoRouteAttribute>() is YukinoRouteAttribute)
                 {
                     services.AddTransient(type);
                     controllerTypes.Add(type);
@@ -58,7 +58,7 @@ namespace YukinoshitaBot.Extensions
             // ControllerCollection维护所有Controller的类型信息
             services.AddSingleton(services =>
             {
-                var controllerCollection = new ControllerCollection();
+                var controllerCollection = new ControllerCollection(services);
 
                 // 将以注入的Controller添加进ControllerCollection
                 foreach (var type in controllerTypes)
