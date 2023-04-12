@@ -1,7 +1,7 @@
 # YukinoshitaBot.OPQ
 这是一个基于[OPQ](https://github.com/opq-osc/OPQ)的QQ机器人SDK，使用.net5开发
 
-### YukinoshitaBot正在活跃开发中，目前已实现基本的图片及文本消息收发。对本框架有什么建议或反馈，欢迎提交Issue。
+### 由于OPQ切换到QQ-NT，本项目已废弃。请使用支持新OPQ框架的新项目: [YukinoshitaBot.OPQ-NT](https://github.com/opq-osc/YukinoShitaBot.OPQ-NT)
 ---
 ## 特性
 - 作为服务注入到IOC容器中，方便集成到已有项目
